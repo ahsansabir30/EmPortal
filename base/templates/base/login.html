@@ -1,0 +1,71 @@
+{% if page == 'login' %}
+<style>
+    .l-container{
+        text-align: center;
+        color: #2C3E50;
+        height: 100%;
+        width: 100%;}
+
+    .l-container .top-head{
+        height: 80px;
+    }
+
+    .l-container .top-head span{
+        font-family: "Poppins", sans-serif;
+        font-size: 3em;
+    }
+
+    .sign-in{
+        border: 1px solid #383838;
+        position: absolute;
+        top: 40%;
+        left: 40%;
+        transform: translate(0%, -40%);
+        height: 220px;
+        width: 300px;
+        text-align: center;
+        border-radius: 5px;
+        box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+    }
+
+    .sign-in div{
+        margin: 30px;
+    }
+
+    .sign-in input{
+        width: 220px;
+        height: 30px;
+        border-radius: 5px;
+        border: 1px solid #383838;
+    }
+
+    .sign-in .submit input{
+        cursor: pointer;
+    }
+
+</style>
+
+<div class="l-container">
+    <div class="top-head">
+        <div class="top-title">
+            <span>
+                EmPortal
+            </span>
+        </div>
+    </div>
+    <div class="sign-in">
+        <form method="POST" action="">
+            {% csrf_token %}
+            <div class="username">
+                <input type="text" name="username" placeholder="Enter Username"/>
+            </div>
+            <div class="login-pass">
+                <input type="text" name="password" placeholder="Enter Password"/>
+            </div>
+            <div class="submit">
+                <input type="submit" value="Login"/>
+            </div>
+        </form>
+    </div>
+</div>
+{% endif %}

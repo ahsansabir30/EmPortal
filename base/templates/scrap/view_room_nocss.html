@@ -1,0 +1,34 @@
+{% extends 'main.html' %} 
+
+{% block content %}
+
+
+<h1>{{room.name}}</h1>
+
+<div class="comment-wrapper">
+    {% for message in room_messages %}
+        <div>
+            <small>@{{message.user}} {{message.created|timesince}} ago </small>
+            <p>{{message.text}}</p> 
+            {% if request.user == message.user %}
+            <small><a href="{% url 'delete-message' message.id %}">Delete</a></small>
+            {% endif %}
+        </div>
+    {% endfor %}
+</div>
+<div class="comment-form">
+    <form method="POST" action="">
+        {% csrf_token %}
+        <input type="text" name="text" placeholder="Write your message here..." />
+    </form>
+</div> 
+<div>
+    <h3>Participants</h3>
+    <hr>
+    {% for user in participants %}
+    <div>
+        <p>{{user.username}}</p>
+    </div>
+    {% endfor %}
+</div>
+{% endblock content %}

@@ -1,0 +1,75 @@
+.dash-con{
+    margin: 10px;
+    height: 625px;
+    overflow-y: auto;
+}
+
+.employee-profile{
+    margin: 10px;
+    height: 80px;
+}
+
+.employee-profile{
+    border-left: 2px solid red;
+    border-right: 2px solid red;
+}
+
+.employee-profile:hover{
+    background-color: #F8F8FF;
+}
+
+.column {
+    position: relative;
+    float: left;
+    width: 33.33%;
+}
+
+.ep-content{
+    margin: 5px;
+}
+
+#top{
+    height: 50px;
+    font-size: 1.1em;
+    font-weight: 500;
+    color: #2980B9;
+}
+
+#top a,
+#top-c{
+    color: #2980B9;
+}
+
+#top a:hover{
+    color: #7B68EE;
+}
+
+.ep-mid span a{
+    color: #2980B9;
+}
+
+.ep-mid span a:hover,
+#top-c:hover{
+    color: #7B68EE;
+}
+
+.ep-mid{
+    color: #7FB3D5;
+}
+
+#top-mid{
+    height: 22px;
+}
+
+.ep-c-top{
+    height: 50px;
+}
+
+.ep-bottom{
+    color: #7FB3D5;
+}
+
+.ep-top-l,
+.ep-bottom-l{
+    text-align: right;
+}   

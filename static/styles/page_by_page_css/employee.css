@@ -1,0 +1,131 @@
+.dashboard-container{
+    overflow: hidden;
+}
+
+.employee-header{
+    padding: 20px 0px 0px 30px;
+}
+
+.employee-header,
+.bfrofile-con span a{
+    color: #2C3E50;
+}
+.employee-name{
+    text-shadow: 2px 2px 2px rgba(206,89,55,0);
+    font-size: 2.5em;
+    font-weight: 600;
+}
+
+.employee-personal,
+.employee-postion{
+    font-size: 1.5em;
+}
+
+li{
+    list-style: none;
+}
+
+.employee-contact{
+    height: 140px;
+    padding-top: 2px;
+}
+
+.employee-contact ul{
+    padding-top: 20px;
+}
+
+.employee-contact ul li{
+    padding: 1px;
+}
+
+.employee-personal ul li{
+    display: inline;
+    font-size: 1em;
+    padding-right: 3px;
+}
+
+.employee-container-top{
+    height: 300px;
+    background-color: #D6EAF8 ;
+}
+
+.employee-bottom{
+    height: 420px;
+}
+
+.employee-bprofile{
+    color: #2C3E50;
+    height: 300px;
+    padding-left: 30px;
+}
+
+.bfrofile-content ul li{
+    font-size: 0.9em;
+    padding: 2px 0px 5px 5px;
+}
+
+.employee-documents{
+    color: #2C3E50;
+    padding-left: 30px;
+}
+
+.bfrofile-content,
+.document-content{
+    padding-top: 5px;
+    font-size: 0.9em;
+}
+
+.bprofile-head,
+.document-head{
+    padding-top: 5px;
+}
+
+.employee-documents{
+    height: 100px;
+}
+
+.employee-float{
+    position: absolute;
+    width: 320px;
+    height: 650px;
+    border-radius: 5px;
+    top: 350px;
+    left:50%;
+    transform: translate(30%,-50%) scale(1);
+    transition: transform 0.4s, top 0.4s;
+    z-index: 1000;
+}
+
+.employee-image img{
+    background-color: #273746;
+    height: 320px;
+    width: 320px;
+    border-radius: 5px 5px 0px 0px;
+    box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+}
+
+.employee-desc{
+    height: 315px;
+    background-color: #273746;
+    border-radius: 0px 0px 5px 5px;
+    box-shadow: 0 10px 20px rgb(0 0 0 / 0.2);
+}
+
+.employee-desc span{
+    position: absolute;
+    align-content: center;
+    padding: 20px;
+    font-size: 0.8em;
+    color: #B3B6B7;
+}
+
+
+.bfrofile-content table th{
+    text-align: left;
+}
+
+.bfrofile-content th,
+.bfrofile-content td {
+    padding: 3px 10px;
+}
+

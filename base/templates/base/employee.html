@@ -1,0 +1,89 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+<div class="dashboard-container">
+    <div class="employee-container-top">
+        <div class="employee-header">
+            <div class="employee-name">{{employee.title}} {{employee.first_name}} {% if employee.middle_name != None %}{{employee.middle_name}}{% endif %} {{employee.last_name}}</div>
+            <div class="employee-postion"> {% if employee.job_role != None %}{{employee.job_role}}{% endif %} {% if employee.department != None %}| {{employee.department}}{% endif %}</div>
+            <div class="employee-contact">
+                <ul>
+                    <li class="address"><i class='bx bx-home-alt' ></i> {{employee.address}} </li>
+                    <li class="email"><i class='bx bx-envelope' ></i> {{employee.email}} </li>
+                    <li class="phone-number"><i class='bx bx-phone' ></i> {{employee.phoneNumber}} </li>
+                </ul>
+            </div>
+            <div class="employee-personal">
+                <ul>
+                    {{message}}
+                    <li><a href="{% url 'employee-alt' employee.id %}" ><i class='bx bx-plus'></i></a></li>
+                    <li><a href="mailto:{{employee_alt.email}}" ><i class='bx bx-envelope'></i></a></li>
+                    <li><a href="{{employee_alt.other_phone}}" ><i class='bx bxs-phone' ></i></a></li>
+                    <li><a href="https://www.github.com/{{employee_alt.github}}"><i class='bx bxl-github' ></i></i></a></li>
+                    <li><a href="https://{{employee_alt.website}}" ><i class='bx bx-world' ></i></a></li>
+                    <li><a href="{% url 'update-employee-alt' employee.id %}" ><i class='bx bx-edit'></i></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="employee-bottom">
+        <div class="employee-bprofile">
+            <div class="bprofile-head">
+                <div class="bfrofile-con">
+                    <span>Employee Information</span>
+                </div>
+            </div>
+            <div class="bfrofile-content">
+                <table>
+                    <tr>
+                        <th>Forename</th>
+                        <td><a href="{% url 'update-employee' employee.id %}">{{employee.first_name}}</a></td>
+                    </tr>
+                    <tr>
+                        <th>Middle Name</th>
+                        <td>{{employee.last_name}}</td></td>
+                    </tr>
+                    <tr>
+                        <th>Surname</th>
+                        <td>{{employee.last_name}}</td>
+                    </tr>
+                    <tr>
+                        <th>Date of Birth</th>
+                        <td>{{employee.dateofbirth}}</td>
+                    </tr>
+                    <tr>
+                        <th>Address</th>
+                        <td>{{employee.address}}</td>
+                    </tr>
+                    <tr>
+                        <th>Postcode</th>
+                        <td>{{employee.postcode}}</td>
+                    </tr>
+                    <tr>
+                        <th>Town / City</th>
+                        <td>{{employee.city}}</td>
+                    </tr>
+                    <tr>
+                        <th>Nationality</th>
+                        <td>{{employee.nationality}}</td>
+                    </tr>
+                    <tr>
+                        <th>Join Date</th>
+                        <td>{{employee.join_date}}</td>
+                    </tr>
+                  </table>  
+            </div>
+        </div>
+    </div>
+    <div class="employee-float">
+        <div class="employee-image">
+            {% load static %}
+            <img src="{{employee.avatar.url}}" alt="blank user" class="">
+        </div>  
+        <div class="employee-desc">
+            <span>{{employee_alt.profile|truncatewords:"80"}}</span>
+        </div>
+    </div>
+</div>
+{% endblock content %}

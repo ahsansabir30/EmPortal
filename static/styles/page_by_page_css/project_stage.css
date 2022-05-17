@@ -1,0 +1,117 @@
+#project-stage{
+    width: 100%;
+}
+
+.p-left-scroll{
+    margin: 0px 10px 0px 5px;
+    height: 640px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.ps-htitle{
+    padding-left: 5px;
+    float: left;
+    color: #848482;
+}
+
+#pnav{
+    float: right;
+    padding-top: 4px;
+    padding-right: 10px;
+}
+
+
+#stage-con-green,
+#stage-con-red{
+    width: 98%;
+    background-color: #F8F8FF;
+}
+
+#green{
+    color: green;
+}
+
+#red{
+    color: red;
+}
+
+#left-bo{
+    border-left: 2px solid red;
+    border-right: 2px solid red;
+}
+
+#ptl-head{
+    padding-left: 5px;
+}
+
+#ptr-head{
+    padding-right: 5px;
+}
+
+.p-block-container{
+    padding: 5px;
+}
+
+.p-block-desc{
+    border-radius: 1rem;
+    margin: 10px;
+}
+
+.p-block-desc p{
+    padding: 10px;
+    font-size: 0.9em;
+}
+
+.trigger-popup{
+    cursor: pointer;
+}
+
+.popup{
+    width: 400px;
+    background-color: #F8F8FF;
+    border: 2px solid 	#383838;
+    border-radius: 5px;
+    position: absolute;
+    top: 0;
+    left:50%;
+    transform: translate(-50%,-50%) scale(0.1);
+    visibility: hidden;
+    transition: transform 0.4s, top 0.4s;
+}
+
+.open-form{
+    visibility: visible;
+    top: 50%;
+    transform: translate(-60%, 20%) scale(1);
+    z-index: 10000;
+}
+
+.form-popup{
+    margin: 10px;
+}
+
+.form-popup a i,
+#submit{
+    float: right;
+    cursor: pointer;
+}
+
+#submit{
+    margin-bottom: 10px;
+}
+
+p{
+    color: #2C3E50;
+}
+
+.footer-ps{
+    padding-left: 5px;
+    color: #2C3E50;
+}
+
+footer div p{
+    color: #2C3E50;
+}
+
+

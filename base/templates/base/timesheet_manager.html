@@ -1,0 +1,55 @@
+{% extends 'main.html' %} 
+{% block content %}
+<div class="dashboard-container">
+    <div class="top-container">
+        <div class="nav-container">
+            <div class="header-links">
+                <a href="{% url 'annual-leave' request.user.id %}"><i class='bx bx-sun'></i>Annual Leave</a>
+                <a href="{% url 'manager-access-timesheet' %}"><i class='bx bx-table'></i>Timesheet</a>
+                <a href="{% url 'manager-annual-leave' %}"><i class='bx bx-task'></i>Holiday Request</a>
+                <a href="{% url 'sick-leave' %}"><i class='bx bxs-thermometer'></i>Sick Leave</a>
+            </div>
+            <div class="search-container">
+                <form method="GET" action="{% url 'manager-access-timesheet' %}">
+                    <input type="text" name="q" placeholder="Search..." />
+                    <a href="{% url 'manager-access-timesheet' %}"><i class='bx bx-x' id="btn" style="top:8px;"></i></a>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div>
+        <div class="table-container" id="ttable">
+            <table class="table-content">
+                <thead class="header">
+                    <tr>
+                    <th>User</th>
+                    <th>Recorded By</th>
+                    <th>Date</th>
+                    <th>Clocked In</th>
+                    <th>Clocked Out</th>
+                    <th>Time Worked</th>
+                    <th>Comments</th>
+                    <th></th>
+                    <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for time in employee_time %}
+                        <tr>
+                        <td>{{time.username|capfirst}}</td>
+                        <td>{{time.recorded_by|capfirst}} </td>
+                        <td>{{time.clocked_in.date}}</td>
+                        <td>{{time.clocked_in}}</td>
+                        <td>{{time.clocked_out}}</td>
+                        <td>{{time.hours_worked}}</td>
+                        <td>{{time.comments}}</td>
+                        <td><a href="{% url 'edit-timesheet' time.id %}">Edit</a></td>
+                        <td><a href="{% url 'delete-timesheet' time.id %}"><i class='bx bx-x'></i></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

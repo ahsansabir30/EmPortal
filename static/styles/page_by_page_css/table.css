@@ -1,0 +1,30 @@
+.table-container{
+    margin: 10px 10px;
+    height: 630px;
+    overflow-y: auto;
+    font-size: 0.8em;
+    color: #2C3E50;
+}
+
+.table-container thead th{
+    position: sticky;
+    top: 0px;
+    overflow: auto;
+}
+
+.table-container table{
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.table-container th,
+.table-container td {
+    padding: 5px 10px;
+}
+
+.table-container th {
+    background: #7FB3D5;   
+    color: #F8F8FF;
+    text-align: left;
+    font-size: 0.9em;
+}

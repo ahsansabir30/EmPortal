@@ -1,0 +1,156 @@
+{% extends 'main.html' %}
+
+{% block content %}
+<div class="dashboard-container">
+    <div class="top-container">
+        <div class="nav-container">
+            <div class="header-links">
+                <a href="{% url 'annual-leave' request.user.id %}"><i class='bx bx-sun'></i>Annual Leave</a>
+                <a href="{% url 'manager-access-timesheet' %}"><i class='bx bx-table'></i>Timesheet</a>
+                <a href="{% url 'manager-annual-leave' %}"><i class='bx bx-task'></i>Holiday Request</a>
+                <a href="{% url 'sick-leave' %}"><i class='bx bxs-thermometer'></i>Sick Leave</a>
+            </div>
+            <div class="search-container">
+                <form method="GET" action="{% url 'manager-annual-leave' %}">
+                    <input type="text" name="q" placeholder="Search..." />
+                    <a href="{% url 'employee-timesheet' request.user.id %}" id="btn"><i class='bx bx-x'></i></a>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="table-container">
+        <div class="leave-container">
+            <div class="p-top-container" id="pending-holidays">
+                <h4>Pending Holidays</h4>
+                <table class="table-content" cellspacing="0">
+                    <thead class="header">
+                        <tr>
+                            <th>Username</th>
+                            <th>Date from</th>
+                            <th>Date to</th>
+                            <th>Comments</th>
+                            <th>Status</th>
+                            <th>Accept</th>
+                            <th>Decline</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for leave in leave_request %}
+                        {% if leave.get_status_display == "Pending"  %}
+                        <tr>
+                            <td>{{leave.username|capfirst}}</td>
+                            <td>{{leave.date_from}}</td>
+                            <td>{{leave.date_to}}</td>
+                            <td>{{leave.comments}}</td>
+                            <td>{{leave.get_status_display}}</td>
+                            <td><a href="{% url 'manager-holiday-request' 'approve' leave.id %}">Accept</a></td>
+                            <td><a href="{% url 'manager-holiday-request' 'reject' leave.id %}"><i class='bx bx-x'></a></td>
+                        </tr>
+                        {% endif %}
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="a-mid-container" id="granted-holidays" style="display:none;">
+                <h4>Granted Holidays</h4>
+                <table class="table-content" cellspacing="0">
+                    <thead class="header">
+                        <tr>
+                            <th>Username</th>
+                            <th>Date from</th>
+                            <th>Date to</th>
+                            <th>Comments</th>
+                            <th>Status</th>
+                            <th>Accept</th>
+                            <th>Decline</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for leave in leave_request %}
+                        {% if leave.get_status_display == "Granted"  %}
+                        <tr>
+                            <td>{{leave.username|capfirst}}</td>
+                            <td>{{leave.date_from}}</td>
+                            <td>{{leave.date_to}}</td>
+                            <td>{{leave.comments}}</td>
+                            <td>{{leave.get_status_display}}</td>
+                            <td><a href="{% url 'manager-holiday-request' 'approve' leave.id %}">Accept</a></td>
+                            <td><a href="{% url 'manager-holiday-request' 'reject' leave.id %}"><i class='bx bx-x'></a></td>
+                        </tr>
+                        {% endif %}
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="a-bottom-container" id="rejected-holidays" style="display:none;">
+                <h4>Reject Holidays</h4>
+                <table class="table-content" cellspacing="0">
+                    <thead class="header">
+                        <tr>
+                            <th>Username</th>
+                            <th>Date from</th>
+                            <th>Date to</th>
+                            <th>Comments</th>
+                            <th>Status</th>
+                            <th>Accept</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for leave in leave_request %}
+                        {% if leave.get_status_display == "Rejected"  %}
+                        <tr>
+                            <td>{{leave.username|capfirst}}</td>
+                            <td>{{leave.date_from}}</td>
+                            <td>{{leave.date_to}}</td>
+                            <td>{{leave.comments}}</td>
+                            <td>{{leave.get_status_display}}</td>
+                            <td><a href="{% url 'manager-holiday-request' 'approve' leave.id %}">Accept</a></td>
+                        </tr>
+                        {% endif %}
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <footer>
+        <div class="mleave-button">
+            <li>
+                <button onclick="pendingFunction()">Pending</button>
+                <button onclick="grantedFunction()">Granted</button>
+                <button onclick="rejectedFunction()">Rejected</button>
+            </li>
+        </div>
+    </footer>
+</div>
+
+<script>
+    function pendingFunction() {
+        var x = document.getElementById("pending-holidays");
+        if (x.style.display === "none") {
+            x.style.display = "block";
+        } else {
+            x.style.display = "none";
+    }
+    }
+
+    function grantedFunction() {
+        var x = document.getElementById("granted-holidays");
+        if (x.style.display === "none") {
+            x.style.display = "block";
+        } else {
+            x.style.display = "none";
+    }
+    }
+
+    function rejectedFunction() {
+        var x = document.getElementById("rejected-holidays");
+        if (x.style.display === "none") {
+            x.style.display = "block";
+        } else {
+            x.style.display = "none";
+    }
+    }
+
+</script>
+{% endblock %}

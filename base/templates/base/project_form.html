@@ -1,0 +1,58 @@
+{% extends 'main.html' %}
+
+{% block content %}
+{% if page == "form" %}
+<div>
+    <form method="POST" action="">
+        {% csrf_token %} 
+        {{form.as_p}}
+        <input type="submit" value="Submit" /> 
+    </form>
+</div>
+{% elif page == "update_project" %}
+<div>
+    <form method="POST" action="">
+        {% csrf_token %}
+        <label for="{{ form.date_from.id_for_label }}" > Project Name:</label>
+        {{form.project}}
+        <label for="{{ form.date_from.id_for_label }}" > Start Date:</label>
+        {{form.date_from}}
+        <label for="{{ form.date_from.id_for_label }}" > Date End:</label>
+        {{form.due_date}}
+        <label for="{{ form.date_from.id_for_label }}" > Participant:</label>
+        {{form.participants}}
+        <input type="submit" value="Submit" /> 
+    </form>
+</div>
+{% else %}
+<div>
+    <form action="" method="post">
+        {% csrf_token %}
+        <div class="fieldWrapper">
+            {{ form.project.errors }}
+            <label for="{{ form.project.id_for_label }}" > Project:</label>
+            {{ form.project }}
+        </div>
+        <div class="fieldWrapper">
+            {{ form.date_from.errors }}
+            <label for="{{ form.date_from.id_for_label }}" > Start Date:</label>
+            <input name="{{ form.date_from.html_name }}" type="date"  id="{{ form.date_from.id_for_label }}" required>
+          
+        </div>
+        <div class="fieldWrapper">
+            {{ form.date_to.errors }}
+            <label for="{{ form.date_to.id_for_label }}"> End Date:</label>
+            <input name="{{ form.due_date.html_name }}" type="date"  id="{{ form.due_date.id_for_label }}" required>
+        </div>
+        <div class="fieldWrapper">
+            {{ form.participants.errors }}
+            <label for="{{ form.participants.id_for_label }}">Participant</label>
+            {{ form.participants }}
+        </div>
+        <div>
+            <input type="submit" value="Submit" /> 
+        </div>
+    </form>
+</div>
+{% endif  %}
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends 'main.html' %} 
+{% block content %}
+
+{% if section == "update" %}
+<div class="form">
+    <form method="POST" action="">
+        {% csrf_token %} 
+        {{form.as_p}}
+        <input type="submit" value="Submit" /> 
+    </form>
+</div>
+{% else %}
+<div>{{section}}</div>
+<div class="form">
+    <form method="POST" action="">
+        {% csrf_token %} 
+        {{form.as_p}}
+        <input type="submit" value="Submit" /> 
+    </form>
+</div>
+{% endif %}
+{% endblock %}

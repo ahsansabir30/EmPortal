@@ -1,0 +1,84 @@
+{% extends 'main.html' %}
+
+{% block content %}
+<div class="dashboard-container">
+    <div class="p-left-content">
+        <div class="top-container">
+            <div class="nav-container">
+                <span><a href="{% url 'create-project' %}"><i class='bx bx-plus' id="mbtn"></i>Create Project</a></span>
+            </div>
+        </div>
+        <div class="project-list">
+            {% for project in projects %}
+            {% if project.status == True %}
+            <div class="p-block-container" id="project-complete">
+                <div class="p-container">
+                    <div class="p-block-head">
+                        <a href="{% url 'project-stages' project.id %}" id="head-com">{{project.project}}</a><span></span>
+                        <a href="{% url 'delete-project' project.id %}" id="jbtn"><i class='bx bx-x'></i></a>
+                    </div>
+                    <div class="p-block-secondary">
+                        <span>{% for user in project.participants.all %}{{user.username|capfirst}} {% endfor %}</span>
+                        <div class="p-secondary">
+                            <div class="p-date">
+                                {% if current_datetime >= project.due_date %}
+                                <span id="outtime">{{project.date_from| date:"d M"}}</span> - <span id="outtime">{{project.due_date| date:"d M"}}</span>
+                                {% else %}
+                                <span id="intime">{{project.date_from| date:"d M"}}</span> - <span id="intime">{{project.due_date| date:"d M"}}</span>
+                                {% endif %}
+                            </div>
+                            <a href="{% url 'update-project' project.id %}">Update</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% else %}
+            <div class="p-block-container" id="project">
+                <div class="p-container">
+                    <div class="p-block-head">
+                        <a href="{% url 'project-stages' project.id %}" class="">{{project.project}}</a><span></span>
+                        <a href="{% url 'delete-project' project.id %}" id="jbtn"><i class='bx bx-x'></i></a>
+                    </div>
+                    <div class="p-block-secondary">
+                        <span>{% for user in project.participants.all %}{{user.username|capfirst}} {% endfor %}</span>
+                        <div class="p-secondary">
+                            <div class="p-date">
+                                {% if current_datetime >= project.due_date %}
+                                <span id="outtime">{{project.date_from| date:"d M"}}</span> - <span id="outtime">{{project.due_date| date:"d M"}}</span>
+                                {% else %}
+                                <span id="intime">{{project.date_from| date:"d M"}}</span> - <span id="intime">{{project.due_date| date:"d M"}}</span>
+                                {% endif %}
+                            </div>
+                            <a href="{% url 'update-project' project.id %}">Update</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+            {% endfor %}  
+        </div>
+    </div>      
+    <div class="p-right-content">
+        <div class="current-stages">
+            <div class="stage-list">
+                <h3>Stages</h3>
+                <div class="stage-con">
+                    {% for change in stages %}
+                    <a class="noHover" href="{% url 'project-stages' change.project.id %}">
+                    <div class="current-thread">
+                        <div class="current-header" id="left-bo">
+                            <span id="ptl-head">{{change.project}}</span>
+                            <span id="ptr-head">{{change.stage_name}}</span>
+                        </div>
+                        <div class="current-desc">
+                           <p class="">{{change.description|truncatechars:100}}</p> 
+                        </div>
+                    </div>
+                    </a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

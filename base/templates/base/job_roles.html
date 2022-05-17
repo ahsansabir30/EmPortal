@@ -1,0 +1,51 @@
+{% extends 'main.html' %} 
+{% block content %}
+
+{% if page == "role_form" %}
+<div class="form">
+    <form method="POST" action="">
+        {% csrf_token %} 
+        {{job_form.as_p}}
+        <input type="submit" value="Submit" /> 
+        <a href="{% url 'job-roles' %}">Back</a>
+    </form>
+</div>
+{% else %}
+<div class="dashboard-container">
+    <nav>
+        <div class="nav-container">
+            <span><a href="{% url 'create-role' %}"><i class='bx bx-plus' id="mbtn"></i>Create Role</a></span>
+            <div class="search-container">
+                <form method="GET" action="{% url 'job-roles' %}">
+                    <input type="text" name="q" placeholder="Search..." />
+                    <a href="{% url 'job-roles' %}" id="btn"><i class='bx bx-x'></i></a>
+                </form>
+            </div>
+        </div>
+    </nav>
+    <div class="content">
+        <div class="left-content">
+            {% regroup job_role by department as departments %}
+            {% for department in departments %}
+            <div class="block-container">
+                <div class="block-head">
+                    <span>{{department.grouper}}</span>
+                </div>
+                <div class="block-secondary">
+                    {% for roles in department.list %}
+                    <li>
+                        {{roles.job_role}}
+                        <div class="secondary-links">
+                            <a href="{% url 'update-role' roles.id %}"><i class='bx bx-edit-alt' ></i></a>
+                            <a href="{% url 'delete-role' roles.id %}" id="jbtn"><i class='bx bx-x'></i></a>
+                        </div>
+                    </li>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>            
+    </div>
+</div>
+{% endif %}
+{% endblock %}

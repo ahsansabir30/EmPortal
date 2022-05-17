@@ -1,0 +1,29 @@
+{% extends 'main.html' %} 
+{% block content %}
+{% if page == 'create user' %}
+<div>
+    <h5>Please Create User First</h5>
+    <br>
+    <a href="{% url 'create-user' %}">Create User</a>
+</div>
+{% elif page == 'finish profile' %}
+<div>
+    <h5>{{message}}</h5>
+    <br>
+    <a href="{% url 'create-employee' %}">Finish Profile</a>
+    <a href="{% url 'delete-user' user.id %}">Delete User</a>
+</div>
+{% else %}
+<div class="form_container" >
+    <div class="form">
+        <h4>Registration Form</h4>
+        <form method="POST" action="">
+            {% csrf_token %}
+            {{form.as_p}}
+            <input type="submit" value="Submit"/>
+        </form>
+        <h5>{{message}}</h5>
+    </div> 
+</div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends 'main.html' %}
+{% block content %}
+{% if page == "edit-profile" %}
+<div>
+    <form method="POST" action="">
+        {% csrf_token %}
+        {{form.as_p}}
+        <input type="submit" value="Submit" /> 
+        <a href="{% url 'dashboard' %}">Back</a>
+    </form>
+</div>
+{% elif page == "Schedular" %}
+<div>
+    <form method="POST" action="">
+        {% csrf_token %} 
+        {{schedule_form.as_p}}
+        <input type="submit" value="Submit" /> 
+        <a href="{% url 'dashboard' %}">Go Back</a>
+        <hr>
+    </form>
+</div>
+{% endif %}
+{% endblock %}

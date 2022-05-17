@@ -1,0 +1,33 @@
+{% extends 'main.html' %} 
+
+{% block content %}
+
+<div>
+    <form method="POST" action="">
+        {% csrf_token %} 
+        {{job_form.as_p}}
+        <input type="submit" value="Submit" /> 
+        {% if page == "updatejobrole" %}
+        <a href="{% url 'job-roles' %}">Go Back</a>
+        {% else %}
+        <a href="{% url 'departments' %}">Go Back</a>
+        {% endif %}
+    </form>
+    <hr>
+
+    <form method="GET" action="{% url 'job-roles' %}">
+        <input type="text" name="q" placeholder="Search Job Roles..." />
+        <a href="{% url 'job-roles' %}">Clear Filter</a>
+    </form>
+
+    {% if page != "updatejobrole" %}
+    <h3>Job Roles</h3>
+    {% endif %}
+    {% for job in job_role %}
+    <p>{{job.job_role}} -- <i>{{job.department}}</i></p>
+    <a href="{% url 'update-role' job.id %}">Update</a>
+    <a href="{% url 'delete-role' job.id %}">Delete</a>
+    {% endfor%}
+</div>
+
+{% endblock content %}

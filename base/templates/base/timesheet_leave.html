@@ -1,0 +1,118 @@
+{% extends 'main.html' %}
+
+{% block content %}
+<div class="dashboard-container" id="leave-dash">
+    <div class="popup-t" id="popup-leave">
+        <div class="form-popup">
+            <div class="top-t">
+                <span>Annual Leave Booking</span>
+                <a onclick="closePopupt()"><i class='bx bx-x' id="tbtn"></i></a>
+            </div>
+            <form action="" method="post">
+                {% csrf_token %}
+                <label for="date-from">Date From: </label>
+                <input type="date" name="date_from">
+                <br>
+                <br>
+                <label for="date-to">Date To: </label>
+                <input type="date" name="date_to">
+                <br>
+                <br>
+                <label for="msg">Reason:</label>
+                <textarea id="msg" name="user_message"></textarea>
+                </table>
+                <br>
+                <br>
+                <button type="leave" name="submit_leave" value="submit">Submit</button>
+            </form>
+        </div>
+    </div>
+    <div class="top-container">
+        <div class="nav-container"> 
+            <div class="header-links">
+                <a href="{% url 'annual-leave' request.user.id %}"><i class='bx bx-sun'></i>Annual Leave</a>
+                <a href="{% url 'manager-access-timesheet' %}"><i class='bx bx-table'></i>Timesheet</a>
+                <a href="{% url 'manager-annual-leave' %}"><i class='bx bx-task'></i>Holiday Request</a>
+                <a href="{% url 'sick-leave' %}"><i class='bx bxs-thermometer'></i>Sick Leave</a>
+            </div>
+            <div class="search-container">
+                <form method="GET" action="{% url 'annual-leave' request.user.id %}">
+                    <input type="text" name="q" placeholder="Search..." />
+                    <a href="{% url 'annual-leave' request.user.id  %}" id="btn"><i class='bx bx-x'></i></a>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="leave-centre-container"></div>
+    <div class="leave-table">
+        <div class="dashboard-table">
+            <div class="table-container">
+                <h5>Granted</h5>
+                <div class="top-table">
+                    <table class="table-content" cellspacing="0">
+                        <thead class="header">
+                            <tr>
+                                <th>Date from</th>
+                                <th>Date to</th>
+                                <th>Comments</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for leave in annual_leave %}
+                            {% if leave.get_status_display == "Granted"  %}
+                            <tr>
+                                <td>{{leave.date_from}}</td>
+                                <td>{{leave.date_to}}</td>
+                                <td>{{leave.comments}}</td>
+                                <td>{{leave.get_status_display}}</td>
+                            </tr>
+                            {% endif %}
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <h5>Holiday Request</h5>
+                <div class="bottom-table">
+                    <table class="table-content" cellspacing="0">
+                        <thead class="header">
+                            <tr>
+                                <th>Date from</th>
+                                <th>Date to</th>
+                                <th>Comments</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for leave in annual_leave %}
+                            <tr>
+                                <td>{{leave.date_from}}</td>
+                                <td>{{leave.date_to}}</td>
+                                <td>{{leave.comments}}</td>
+                                <td>{{leave.get_status_display}}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer>
+        <div>
+            <a class="trigger-popup" onclick="openPopupt()" id="btn"><i class='bx bx-photo-album'></i></i></a>
+        </div>
+    </footer>
+</div>
+<script>
+    let popup = document.getElementById("popup-leave");
+    
+    function openPopupt(){
+        popup.classList.add("open-popupt");
+    }
+
+    function closePopupt(){
+        popup.classList.remove("open-popupt");
+    } 
+</script>
+{% endblock %}

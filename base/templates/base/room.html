@@ -1,0 +1,50 @@
+{% extends 'main.html' %} 
+
+{% block content %}
+<div class="dashboard-container">
+    <div class="left-container">
+        <nav>
+            <a href="{% url 'create-room' %}"><i class='bx bx-plus' id="mbtn"></i>Create</a>    
+        </nav>
+        <div class="thread-container">
+            <div class="rooms">
+                {% for room in rooms %}
+                <div class="roomlist">
+                    <div class="roomlist-header">
+                        <h3><a href="{% url 'view-room' room.id %}">{{room.room}} </a></h3> 
+                        <a href="{% url 'delete-room' room.id %}"><i class='bx bx-x' id="xbtn"></i></a>
+                    </div>
+                    <div class="roomlist-part">
+                        {% for user in room.participants.all %}{{user.username|capfirst}} {% endfor %}  
+                    </div>
+                    <div class="roomlist-bottom">
+                        <a href="{% url 'update-room' room.id %}">Update</a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div> 
+    </div>
+    <div class="right-container">
+        <div class="current-chat">
+            <div class="chat-list">
+                <h3>Current Activity</h3>
+                {% for message in recent_activity %}
+                <a class="noHover" href="{% url 'view-room' message.room.id %}">
+                <div class="current-thread">
+                    <div class="current-header">
+                        <span>@{{message.user|capfirst}}</span>
+                        <span>{{message.room}}</span>
+                    </div>
+                    <div class="current-message">
+                        {{message.text|truncatewords:"20"}}
+                    </div>
+                </div>
+                </a>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+    
+{% endblock content %}

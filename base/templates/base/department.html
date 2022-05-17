@@ -1,0 +1,44 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+<div class="dashboard-container">
+    <nav>
+        <div class="nav-container">
+            <span></span>
+            <div class="search-container">
+                <form method="GET" action="{% url 'departments' %}">
+                    <input type="text" name="q" placeholder="Search..." />
+                    <a href="{% url 'departments' %}" id="btn"><i class='bx bx-x'></i></a>
+                </form>
+            </div>
+        </div>
+    </nav>
+    <div class="tiles-container">
+        {% for department in department %}
+        <div class="column-4 department">
+            <div class="tile-head">
+                <a href="{% url 'delete-department' department.department %}"><i class='bx bx-x'></i></a>
+            </div>
+            <div class="tile-title">
+                <span>{{department.department}}</span>
+            </div>
+            <div class="tile-links">
+                <a href="{% url 'update-department' department.department %}"><i class='bx bx-edit' ></i></a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <footer>
+        <div class="footer-d">
+            <form method="POST" action="">
+                {% csrf_token %} 
+                <label for="{{ form.department.id_for_label }}"> Add Department: </label>{{department_form.department}}
+                <div>{{department_form.department.errors}}</div>   
+            </form>
+            <p><a href="{% url 'job-roles' %}">Job Roles</a></p>
+        </div>
+    </footer>
+</div>
+
+{% endblock %}

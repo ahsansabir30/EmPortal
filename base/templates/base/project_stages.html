@@ -1,0 +1,131 @@
+{% extends 'main.html' %}
+
+{% block content %}
+<div class="dashboard-container">
+    <div class="top-container">
+        <div class="ps-header">
+            <a href="{% url 'update-project' project_name.id %}">
+            <h2 class="ps-htitle">
+                {{project_name}}
+            </h2>
+            </a>
+            <div class="nav-container" id="pnav">
+                <span><a class="trigger-popup" onclick="openForm()"><i class='bx bx-plus' id="mbtn"></i>Create Stage</a></span>
+            </div>
+        </div>
+    </div>
+    <div class="p-left-content" id="project-stage">
+        <div class="p-left-scroll">
+            {% for stage in project_stages %}
+            {% if stage.status == True %}
+            <div class="p-block-container" id="stage-con-green">
+                <div class="p-container">
+                    <div class="p-block-head">
+                        <div class="p-block-header">
+                            <span id="green">{{stage.stages}}| {{stage.stage_name|capfirst}}</span>
+                        </div>
+                        <a href="{% url 'delete-project-stage' stage.id %}" id="jbtn"><i class='bx bx-x'></i></a>
+                    </div>
+                    <div class="p-block-secondary">
+                        <div class="p-block-desc">
+                            <p>{{stage.description}}</p>
+                        </div>
+                        <div class="p-secondary">
+                            <div class="p-date">
+                                <span id="intime">{{stage.date_from| date:"d M"}}</span> - <span id="intime">{{stage.date_to| date:"d M"}}</span>
+                            </div>
+                            <a href="{% url 'update-project-stage' stage.id %}">Update</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% else %}
+            <div class="p-block-container" id="stage-con-red">
+                <div class="p-container">
+                    <div class="p-block-head">
+                        <div class="p-block-header">
+                            <span id="red">{{stage.stages}}| {{stage.stage_name|capfirst}}</span>
+                        </div>
+                        <a href="{% url 'delete-project-stage' stage.id %}" id="jbtn"><i class='bx bx-x'></i></a>
+                    </div>
+                    <div class="p-block-secondary">
+                        <div class="p-block-desc">
+                            <p>{{stage.description}}</p>
+                        </div>
+                        <div class="p-secondary">
+                            <div class="p-date">
+                                {% if current_datetime >= stage.date_to %}
+                                <span id="outtime">{{stage.date_from| date:"d M"}}</span> - <span id="outtime">{{stage.date_to| date:"d M"}}</span>
+                                {% else %}
+                                <span id="intime">{{stage.date_from| date:"d M"}}</span> - <span id="intime">{{stage.date_to| date:"d M"}}</span>
+                                {% endif %}
+                            </div>
+                            <a href="{% url 'update-project-stage' stage.id %}">Update</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+            {% endfor %}  
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="popup" id="popup">
+            <div class="form-popup">
+                <a onclick="closeForm()"><i class='bx bx-x'></i></a>
+                <form method="POST" action="">
+                    {% csrf_token %} 
+                    {{form.as_p}}
+                    <input type="submit" value="Submit" id="submit"/> 
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div>
+            <div class="footer-ps">
+                {% if current_datetime >= date_to %}
+                <span id="outtime">{{date_from| date:"d/m/Y"}} - {{date_to| date:"d/m/Y"}}</span>
+                {% else %}
+                <span id="intime">{{date_from| date:"d/m/Y"}} - {{date_to| date:"d/m/Y"}}</span>
+                {% endif %}
+            </div>
+            <p>{{message}}</p>
+            <p>{{ps_count}} Stages</p>
+        </div>
+    </footer>
+</div>
+<script>
+    let form = document.getElementById("popup");
+    
+    function openForm(){
+        form.classList.add("open-form");
+    }
+
+    function closeForm(){
+    form.classList.remove("open-form");
+    } 
+</script>
+
+{% endblock %}
+
+
+<div class="footer-t">
+    <div class="time-form">
+        <form action="" method="post">
+            {% csrf_token %} 
+            <div class="form-wrapper">
+                <input type="submit" name="clock_action" value="ClockIn">
+                <input type="submit" name="clock_action" value="ClockOut"> 
+            </div>
+        </form>  
+    </div>
+    <div class="time-mess">
+        <span>{{message}}</span>
+    </div>
+    <div class="time-right">
+        <span> Total Hours: </span>
+    </div>
+</div>

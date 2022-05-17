@@ -1,0 +1,82 @@
+{% extends 'main.html' %}
+
+{% block content%}
+<div class="dashboard-container">
+    <div class="left-container">
+        <nav>
+            <a href="{% url 'create-room' %}"><i class='bx bx-plus' id="mbtn"></i>Create</a>
+        </nav>
+        <div class="thread-container">
+            <div class="rooms">
+                {% for room in rooms %}
+                <div class="roomlist">
+                    <div class="roomlist-header">
+                        <h3><a href="{% url 'view-room' room.id %}">{{room.room}}</a></h3> 
+                        <a href="{% url 'delete-room' room.id %}"><i class='bx bx-x' id="xbtn"></i></a>
+                    </div>
+                    <div class="roomlist-part">
+                        {% for user in room.participants.all %}{{user.username|capfirst}} {% endfor %}  
+                    </div>
+                    <div class="roomlist-bottom">
+                        <a href="{% url 'update-room' room.id %}">Update</a>
+                    </div>
+                </div>
+            {% endfor %}
+            </div>
+        </div>
+    </div> 
+    <div class="right-container">
+        <div class="chatroom">
+            <div class="room-conversation" id="convo">
+                <span class="message-title">{{room}}</span>
+                <div class="comment-wrapper">
+                    {% for message in room_messages %}
+                        <div class="message">
+                            {% if message.user == request.user %}
+                            <div class="message-user">
+                                <div class="message-header">
+                                    <small>@{{message.user}} {{message.created|timesince}} ago </small>
+                                    {% if request.user == message.user %}
+                                    <small><a href="{% url 'delete-message' message.id %}"><i class='bx bx-x'></i></a></small>
+                                    {% endif %}
+                                </div>
+                                <div class="message-text-u">
+                                    <p>{{message.text}}</p> 
+                                </div>
+                            </div>
+                            {% else %}
+                            <div class="message-otheruser">
+                                <div class="message-header">
+                                    <small>@{{message.user}} {{message.created|timesince}} ago </small>
+                                    {% if request.user == message.user %}
+                                    <small><a href="{% url 'delete-message' message.id %}"><i class='bx bx-x'></i></a></small>
+                                    {% endif %}
+                                </div>
+                                <div class="message-text-o">
+                                    <p>{{message.text}}</p> 
+                                </div>
+                            </div>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="comment-footer">
+                <div class="comment-form">
+                    <form method="POST" action="">
+                        {% csrf_token %}
+                        <input type="text" name="text" placeholder="Write your message here..." />
+                    </form>
+                </div> 
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var objDiv = document.getElementById("convo");
+    objDiv.scrollTop = objDiv.scrollHeight;
+</script>
+{% endblock %}
+
+
+

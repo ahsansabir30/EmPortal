@@ -1,0 +1,84 @@
+.p-left-content{
+    width: 62%;
+    float: left;
+}
+
+.project-list{
+    padding: 5px 5px 0px 12px;
+    height: 670px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.p-right-content{
+    height: 720px;
+    width: 38%;
+    float: right;
+}
+
+.stage-con{
+    height: 620px;
+    overflow-y: auto;
+}
+
+.current-stages{
+    margin: 20px;
+    height: 670px;
+    border-radius: 1rem 0rem 0rem 1rem;
+    background-color: #F8F8FF;
+}
+
+.p-block-container{
+    margin: 10px;
+    width: 99%;
+    border-radius: 1rem;
+}
+
+.p-block-secondary span,
+.p-secondary a{
+    color: #2C3E50;
+}
+
+
+#head-com{
+    color: green;
+}
+
+#project-complete:hover,
+#project:hover{
+    background-color: #F8F8FF;
+}
+
+.p-container{
+    padding: 5px;
+}
+
+.p-block-head,
+.p-secondary{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#outtime{
+    color: red;
+}
+
+#intime{
+    color: green;
+}
+
+.current-desc{
+    padding-top: 3px;
+    font-size: 0.8em;
+}
+
+.stage-list{
+    margin: 10px;
+    padding-top: 5px;
+} 
+
+.chat-list h3,
+.stage-list h3{
+    color: #2C3E50;
+}

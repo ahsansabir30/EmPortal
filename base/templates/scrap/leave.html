@@ -1,0 +1,99 @@
+{% extends 'main.html' %} 
+
+{% block content %}
+<!-- Annual Leave Booking -->
+{% if page == "Leave" %}
+<a href="{% url 'employee-timesheet' request.user.id %}">Back</a>
+{{message}}
+<div>
+    <form action="" method="post">
+        {% csrf_token %}
+        <label for="date-from">Date From: </label>
+        <input type="date" name="date_from">
+        <br>
+        <br>
+        <label for="date-to">Date To: </label>
+        <input type="date" name="date_to">
+        <br>
+        <br>
+        <label for="msg">Reason:</label>
+        <textarea id="msg" name="user_message"></textarea>
+        </table>
+        <br>
+        <br>
+        <button type="leave" name="submit_leave" value="submit">Submit</button>
+    </form>
+
+    <div>
+        <form method="GET" action="{% url 'annual-leave' request.user.id %}">
+            <input type="text" name="q" placeholder="Search Annual Leave..." />
+        </form>
+    </div>
+        <h5>Granted</h5>
+        {% for leave in annual_leave %}
+        {% if request.user == leave.username and leave.get_status_display == "Granted"  %}
+        <p>{{leave.username|capfirst}} -- {{leave.recorded_by|capfirst}} -- {{leave.date_from}} -- {{leave.date_to}} -- {{leave.comments}} -- {{leave.get_status_display}} </p>
+        {% endif %}
+        {% endfor %}
+        <hr>
+    
+        <h5>Holiday Request</h5>
+        {% for leave in annual_leave %}
+        {% if request.user == leave.username %}
+        <p>{{leave.username|capfirst}} -- {{leave.recorded_by|capfirst}} -- {{leave.date_from}} -- {{leave.date_to}} -- {{leave.comments}} -- {{leave.get_status_display}} </p>
+        {% if leave.get_status_display == "Pending"%}
+        <a href="{% url 'cancel-annual-leave' leave.id %}">Cancel</a>
+        {% endif %}
+        {% endif %}
+        {% endfor %}
+
+</div>
+{% elif page == 'ManagerAnnualLeave' %}
+<!-- Manager Function - authorisation of user holiday/ request -->
+<div>
+    <form method="GET" action="{% url 'manager-annual-leave' %}">
+        <input type="text" name="q" placeholder="Search Annual Leave Request..." />
+        <a href="{% url 'employee-timesheet' request.user.id %}">Back</a>
+    </form>
+    {{message}}
+
+        <h5>Pending Holidays</h5>
+        {% for leave in leave_request %}
+        {% if leave.get_status_display == "Pending"  %}
+        <p>{{leave.username|capfirst}} -- {{leave.recorded_by|capfirst}} -- {{leave.date_from}} -- {{leave.date_to}} -- {{leave.comments}} -- {{leave.get_status_display}}</p>
+        <a href="{% url 'manager-holiday-request' 'approve' leave.id %}">Accept</a>
+        <a href="{% url 'manager-holiday-request' 'reject' leave.id %}">Decline</a>
+        {% endif %}
+        {% endfor %}
+
+        <h5>Granted Holidays</h5>
+        {% for leave in leave_request %}
+        {% if leave.get_status_display == "Granted"  %}
+        <p>{{leave.username|capfirst}} -- {{leave.recorded_by|capfirst}} -- {{leave.date_from}} -- {{leave.date_to}} -- {{leave.comments}} -- {{leave.get_status_display}}</p>
+        {% endif %}
+        {% endfor %}
+
+        <h5>Rejected Holidays</h5>
+        {% for leave in leave_request %}
+        {% if leave.get_status_display == "Rejected"  %}
+        <p>{{leave.username|capfirst}} -- {{leave.recorded_by|capfirst}} -- {{leave.date_from}} -- {{leave.date_to}} -- {{leave.comments}} -- {{leave.get_status_display}}</p>
+        {% endif %}
+        {% endfor %}
+</div>
+<!-- Manager Function - Sick Leave-->
+{% elif page == 'Sick Leave' %}
+<div>
+    <a href="{% url 'employee-timesheet' request.user.id %}">Back</a>
+    <form method="POST" action="">
+        {% csrf_token %} 
+        {{sick_form.as_p}}
+        <input type="submit" value="Submit" /> 
+    </form>
+    <h5>Sick Leave</h5>
+    {% for leave in sick_leave %}
+    {{leave.username}} -- {{leave.recorded_by}} -- {{leave.date_from}} -- {{leave.date_to}} -- {{leave.doctors_note}} -- {{leave.comments}}
+    <br>
+    {% endfor %}
+</div>
+{% endif %}
+{% endblock %}

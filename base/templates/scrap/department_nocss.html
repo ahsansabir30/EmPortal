@@ -1,0 +1,33 @@
+{% extends 'main.html' %} 
+
+{% block content %}
+
+{% if page == 'department' %}
+<div>
+    <form method="POST" action="">
+        {% csrf_token %} 
+        {{department_form.as_p}}
+        <input type="submit" value="Submit" /> 
+        {% if page1 == 'updatedepartment' %}
+        <a href="{% url 'departments' %}">Go Back</a>
+        {% else %}
+        <a href="{% url 'dashboard' %}">Go Back</a>
+        {% endif %}
+        <hr>
+    </form>
+    <form method="GET" action="{% url 'departments' %}">
+        <input type="text" name="q" placeholder="Search Department Name..." />
+        <a href="{% url 'departments' %}">Clear Filter</a>
+    </form>
+    {% for department in department %}
+    <h3>{{department.department}}</h3>
+    <a href="{% url 'update-department' department.department %}">Update</a>
+    <a href="{% url 'delete-department' department.department %}">Delete</a>
+    {% endfor %}
+    {% if page1 != 'updatedepartment' %}
+    <hr>
+    <a href="{% url 'job-roles' %}">Job-Roles</a>
+    {% endif %}
+</div> 
+{% endif %}
+{% endblock content %}

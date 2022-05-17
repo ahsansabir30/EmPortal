@@ -1,0 +1,25 @@
+{% extends 'main.html' %} 
+
+{% block content %}
+
+<div>
+    <form action="" method="post">{% csrf_token %}
+        <fieldset>
+            <legend>Clock In/Out</legend>
+            <div></div>
+            <table>
+                <tr>
+                    <td><input type="submit" name="clock_action" value="ClockIn"><input type="submit" name="clock_action" value="ClockOut"></td>
+                </tr>
+            </table>
+            <div>{{message}}</div>
+        </fieldset>
+        </form>
+    {% for time in employee_time %}
+        {% if request.user == time.username %}
+        <p>{{time.username|capfirst}} -- {{time.recorded_by|capfirst}} -- {{time.clocking_time}} -- {{time.logging}}</p>
+        {% endif %}
+    {% endfor %}
+</div>
+
+{% endblock %}

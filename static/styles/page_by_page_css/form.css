@@ -1,0 +1,17 @@
+.form_container{
+    text-align: center;
+    padding-top: 5%;
+}
+
+.form_container .form{
+    margin: auto;
+    width: 500px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    display: inline-block;
+    text-align: right;
+}
+
+.form_container h4{
+    text-align: left;
+}

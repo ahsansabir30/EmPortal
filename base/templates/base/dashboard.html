@@ -1,0 +1,58 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+<div class="dashboard-container">
+    <nav>
+        <div class="nav-container">
+            <span>User: {{request.user|capfirst}}</span>
+            <div class="search-container">
+                <form method="GET" action="{% url 'dashboard' %}">
+                    <input type="text" name="q" placeholder="Search..." />
+                    <a href="{% url 'dashboard' %}" id="btn"><i class='bx bx-x'></i></a>
+                </form>
+            </div>
+        </div>
+    </nav>
+    <div class="dashboard-container">
+        <div class="dash-con">
+            {% for employee in employees %}
+            <div class="employee-profile">
+                <div class="ep-content">
+                    <div class="column">
+                        <div class="ep-top" id="top">
+                            {{employee.id}} | <a href="{% url 'employee' employee.id %}"> {{employee.first_name}} {{employee.last_name}}</a>
+                        </div>
+                        <div class="ep-bottom">
+                            {{employee.department}} {% if employee.job_role != None %}| {{employee.job_role}} {% endif %}
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div class="ep-c-top"></div>
+                        <div class="ep-mid">
+                            <span>{{employee.phoneNumber}} | <a href="mailto:{{employee.email}}">{{employee.email}}</a></span>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div class="ep-top-l" id="top">
+                            <a href="{% url 'delete-employee' employee.id %}"><i class='bx bx-x'></i></a>
+                        </div>
+                        <div class="ep-bottom-l">
+                            <a href="{% url 'update-employee' employee.id %}"><i class='bx bx-edit' id="top-c"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    <footer>
+        <div>
+            <li>
+                <a href="{% url 'create-user' %}" id="btn"><i class='bx bxs-user-plus'></i></a>
+            </li>
+            <p>{{employee_count}} Employees</p>
+        </div>
+    </footer>
+</div>
+{% endblock %}

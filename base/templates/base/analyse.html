@@ -1,0 +1,163 @@
+{% extends 'main.html' %}
+
+{% block content %}
+<div class="a-container">
+    <div class="top-container">
+        <div class="box-one">
+            <div class="box-con">
+                <div class="name-header">Employees</div>
+                <span class="stat">{{employee_count}}</span>
+                <span class="icon"><i class='bx bx-user' ></i></span>
+            </div>
+        </div>
+        <div class="box-one" id="adep">
+            <div class="box-con">
+                <div class="name-header">Department</div>
+                <span class="stat">{{department_count}}</span>
+                <span class="icon"><i class='bx bx-buildings'></i></span>
+            </div>
+        </div>
+        <div class="box-one" id="bproject">
+            <div class="box-con" >
+                <div class="name-header">Total Project</div>
+                <span class="stat">{{room_count}}</span>
+                <span class="icon"><i class='bx bx-task' ></i></span>
+            </div>
+        </div>
+        <div class="box-one" id="ccount">
+            <div class="box-con">
+                <div class="name-header">Rooms</div>
+                <span class="stat">{{room_count}}</span>
+                <span class="icon"><i class='bx bx-chat' ></i></span>
+            </div>
+        </div>
+    </div>
+   <div class="bottom-acon">
+       <div class="box">
+            <div class="name-header" id="nh-a">
+                <span>Employee Overview</span>
+            </div>
+            <div class="container-pie">
+                <canvas id="piechart" width="500" height="500"></canvas>
+            </div>
+       </div>
+       <div class="box-two">
+            <div class="name-header" id="nh-a">
+                <span>Project Overview</span>
+            </div>
+            <div class="bar-chart">
+                <canvas id="bar" width="1000" height="800"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+const ctx = document.getElementById('piechart').getContext('2d');
+const myChart = new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+        labels: [{% for x in dep %} '{{x}}', {% endfor %}],
+        datasets: [{
+            data: [{% for x in data %} '{{x}}', {% endfor %}],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)',
+                'rgba(245, 40, 145, 0.2)',
+                'rgba(245, 88, 52, 0.2))',
+                'rgba(255, 131, 224, 0.2)',
+                'rgba(255, 159, 64, 0.2)',
+                'rgba(68, 131, 0, 0.2)',
+                'rgba(68, 224, 212, 0.2)',
+                'rgba(12, 142, 76, 0.2)'
+            
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 0.2)',
+                'rgba(245, 40, 145, 1)',
+                'rgba(245, 88, 52, 1))',
+                'rgba(245, 214, 164, 1)',
+                'rgba(255, 131, 224, 1)',
+                'rgba(68, 131, 0, 1)',
+                'rgba(68, 224, 212, 1)',
+                'rgba(12, 142, 76, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    }
+});
+
+const bar = document.getElementById('bar').getContext('2d');
+const barChart = new Chart(bar, {
+    type: 'bar',
+    data: {
+        labels: [{% for x in proj %} '{{x}}', {% endfor %}],
+        datasets: [{
+            label: "All Projects",
+            data: [{% for x in datap %} '{{x}}', {% endfor %}],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)',
+                'rgba(245, 40, 145, 0.2)',
+                'rgba(245, 88, 52, 0.2))',
+                'rgba(255, 131, 224, 0.2)',
+                'rgba(255, 159, 64, 0.2)',
+                'rgba(68, 131, 0, 0.2)',
+                'rgba(68, 224, 212, 0.2)',
+                'rgba(12, 142, 76, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)',
+                'rgba(255, 159, 64, 0.2)',
+                'rgba(245, 40, 145, 0.2)',
+                'rgba(245, 88, 52, 0.2))',
+                'rgba(255, 131, 224, 0.2)',
+                'rgba(255, 159, 64, 0.2)',
+                'rgba(68, 131, 0, 0.2)',
+                'rgba(68, 224, 212, 0.2)',
+                'rgba(12, 142, 76, 0.2)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                display: true,
+                ticks: {
+                beginAtZero: true,
+                steps: 4,
+                stepValue: 5,
+                max: 20} }]}}
+
+});
+</script>
+
+
+
+{% endblock %}

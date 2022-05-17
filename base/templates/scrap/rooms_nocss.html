@@ -1,0 +1,31 @@
+{% extends 'main.html' %} 
+
+{% block content %}
+{% if page == 'view rooms' %}
+<a href="{% url 'create-room' %}">Create</a>
+<div>
+    <form method="GET" action="{% url 'rooms' %}">
+        <input type="text" name="q" placeholder="Search Employees Name..." />
+        <a href="{% url 'rooms' %}">Clear Filter</a>
+    </form>
+    {% for room in rooms %}
+    <h3><a href="{% url 'view-room' room.id %}">{{room.room}} </a> -- {{room.description}}</h3> 
+    <h5>
+        {% for user in room.participants.all %}{{user.username|capfirst}} {% endfor %}
+    </h5>
+    <a href="{% url 'update-room' room.id %}">Update</a>
+    <a href="{% url 'delete-room' room.id %}">Delete</a>
+    {% endfor %}
+</div>
+{% else %}
+<div>
+    <form method="POST" action="">
+        {% csrf_token %} 
+        {{form.as_p}}
+        <input type="submit" value="Submit" /> 
+        <a href="{% url 'rooms' %}">Back</a>
+        {% endif %}
+    </form>
+    <hr>
+</div>
+{% endblock content %}

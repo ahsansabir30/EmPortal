@@ -1,0 +1,38 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+{% if page == 'deletedep' %}
+<form method="POST" action=" ">
+    {% csrf_token %}
+    <p>ARE YOU SURE YOU WANT TO DELETE "{{obj}}" ?</p>
+
+    <a href="{% url 'departments' %}">Back</a>
+    <input type="submit" value="Confirm"/>
+<form>
+{% elif page == 'deletejobrole' %}
+<form method="POST" action=" ">
+    {% csrf_token %}
+    <p>ARE YOU SURE YOU WANT TO DELETE "{{obj}}" ?</p>
+
+    <a href="{% url 'job-roles' %}">Back</a>
+    <input type="submit" value="Confirm"/>
+<form>
+{% elif page == 'cancel_leave' %}
+<form method="POST" action=" ">
+    {% csrf_token %}
+    <p>ARE YOU SURE YOU WANT TO CANCEL THIS HOLIDAY?</p>
+
+    <a href="{% url 'annual-leave' request.user.id %}">Back</a>
+    <input type="submit" value="Confirm"/>
+<form>
+{% else %}
+<form method="POST" action=" ">
+    {% csrf_token %}
+    <p>ARE YOU SURE YOU WANT TO DELETE "{{obj}}" ?</p>
+
+    <a href="{{request.META.HTTP_REFERER}}">Back</a>
+    <input type="submit" value="Confirm"/>
+<form>
+{% endif %}
+{% endblock content %}

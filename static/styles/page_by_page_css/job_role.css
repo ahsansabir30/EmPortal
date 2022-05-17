@@ -1,0 +1,52 @@
+.left-content{
+    height: 650px;
+    width: 50%;
+    float: left;
+}
+
+.right-content{
+    height: 650px;
+    width: 50%;
+    float: right;
+}
+
+.block-container{
+    background-color: #F8F8FF;
+    margin: 10px;
+    border-radius: 10px;
+    justify-content: space-between;
+}
+
+.block-container:hover{
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2)
+}
+
+.block-head{
+    padding: 10px;
+}
+
+
+.block-head span{
+    font-size: 1.5em;
+}
+
+.block-secondary{
+    padding: 0px 0px 10px 25px;
+}
+
+.block-secondary li{
+    padding: 2px;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.secondary-links{
+    padding-right: 10px;
+}
+
+.secondary-links #jbtn{
+    position: relative;     
+    top: 2px;
+}

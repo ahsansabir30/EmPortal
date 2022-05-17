@@ -1,0 +1,80 @@
+<div class="sidebar">
+    <div class="logo_content">
+        <div class="logo">
+            <div class="logo_name">EmPortal</div>
+        </div>
+        <i class='bx bx-menu' id="btn" ></i>
+    </div>
+    <ul class="nav_list" style="padding: 0;">
+        <li style="list-style-type: none;">
+            <a href="{% url 'dashboard' %}">
+                <i class='bx bx-grid-alt' ></i>
+                <span class="link_name">Dashboard</span>
+            </a>
+            <span class="tooltip">Dashboard</span>
+        </li>
+        <li style="list-style-type: none;">
+            <a href="{% url 'departments' %}">
+                <i class='bx bxs-business'></i>
+                <span class="link_name">Department</span>
+            </a>
+            <span class="tooltip">Department</span>
+        </li>
+        <li style="list-style-type: none;">
+            <a href="{% url 'job-roles' %}">
+                <i class='bx bx-group'></i>
+                <span class="link_name">Role</span>
+            </a>
+            <span class="tooltip">Role</span>
+        </li>
+        <li style="list-style-type: none;">
+            <a href="{% url 'employee-timesheet' request.user.id %}">
+                <i class='bx bx-time-five' ></i>
+                <span class="link_name">TimeSheet</span>
+            </a>
+            <span class="tooltip">TimeSheet</span>  
+        </li>
+        <li style="list-style-type: none;">
+            <a href="{% url 'rooms' %}">
+                <i class='bx bx-conversation'></i>
+                <span class="link_name">Messenger</span>
+            </a>
+            <span class="tooltip">Messenger</span>  
+        </li>
+        <li style="list-style-type: none;">
+            <a href="{% url 'projects' %}">
+                <i class='bx bx-task'></i>
+                <span class="link_name">Project</span>
+            </a>
+            <span class="tooltip">Project</span> 
+        </li>
+        <li style="list-style-type: none;">
+            <a href="{% url 'analyse' %}">
+                <i class='bx bx-bar-chart-alt-2' ></i>
+                <span class="link_name">Analyst</span>
+            </a>
+            <span class="tooltip">Analyst</span>  
+        </li>
+    </ul>
+    <div class="bottom_content">
+        <div class="profile">
+            <a href="{% url 'employee' request.user.id %}">
+                <div class="name">{{request.user|capfirst}}</div>
+            </a>
+        </div>
+        <a href="{% url 'logout' %}"> 
+            <i class='bx bx-log-out' id="log_out" ></i>
+        </a>    
+    </div>
+</div> 
+
+
+<script>
+    let btn = document.querySelector("#btn")
+    let sidebar = document.querySelector(".sidebar")
+
+    btn.onclick = function() {
+        sidebar.classList.toggle("active");
+    }
+
+</script>

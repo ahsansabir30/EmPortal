@@ -1,0 +1,76 @@
+{% extends 'main.html' %}
+
+{% block content %}
+{% if page == "Edit Timesheet" %}
+<form method="POST" action="">
+    {% csrf_token %}
+    {{timesheet_form.as_p}}
+    <input type="submit" value="Submit"/> 
+    <a href="{% url 'manager-access-timesheet' %}">Back</a>
+</form>
+{% else %}
+<div class="timesheet-container">
+    <div class="top-container">
+        <div class="nav-container">
+            <div class="header-links">
+                <a href="{% url 'annual-leave' request.user.id %}"><i class='bx bx-sun'></i>Annual Leave</a>
+                <a href="{% url 'manager-access-timesheet' %}"><i class='bx bx-table'></i>Timesheet</a>
+                <a href="{% url 'manager-annual-leave' %}"><i class='bx bx-task'></i>Holiday Request</a>
+                <a href="{% url 'sick-leave' %}"><i class='bx bxs-thermometer'></i>Sick Leave</a>
+            </div>
+            <div class="search-container">
+                <form method="GET" action="{% url 'employee-timesheet' request.user.id %}">
+                    <input type="text" name="q" placeholder="Search..." />
+                    <a href="{% url 'employee-timesheet' request.user.id %}" id="tbtn"><i class='bx bx-x'></i></a>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="centre-container">
+        <div class="centre">
+            <div class="centre-buttons">  
+                <form action="" method="post">
+                    {% csrf_token %}     
+                    <input type="submit" name="clock_action" value="ClockIn">
+                    <input type="submit" name="clock_action" value="ClockOut">     
+                </form>
+            </div>
+            <div class="tmessage">
+                <span>{{message}}</span> 
+            </div>
+        </div>
+    </div>
+    <div class="bottom-container">
+        <div class="dashboard-container">
+            <div class="table-container">
+                <table class="table-content">
+                    <thead class="header">
+                        <tr>
+                        <th>User</th>
+                        <th>Date</th>
+                        <th>Clocked In</th>
+                        <th>Clocked Out</th>
+                        <th>Time Worked</th>
+                        <th>Comments</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for time in employee_time %}
+                            <tr>
+                            <td>{{time.username|capfirst}}</td>
+                            <td>{{time.clocked_in.date}}</td>
+                            <td>{{time.clocked_in.time}}</td>
+                            <td>{{time.clocked_out.time}}</td>
+                            <td>{{time.hours_worked}}</td>
+                            <td>{{time.comments}}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+{% endblock %}

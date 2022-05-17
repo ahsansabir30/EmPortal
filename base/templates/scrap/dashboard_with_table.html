@@ -1,0 +1,65 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+<div class="dashboard-container">
+    <nav>
+        <div class="nav-container">
+            <span>Hi, {{request.user|capfirst}}</span>
+            <div class="search-container">
+                <form method="GET" action="{% url 'dashboard' %}">
+                    <input type="text" name="q" placeholder="Search..." />
+                    <a href="{% url 'dashboard' %}" id="btn"><i class='bx bx-x'></i></a>
+                </form>
+            </div>
+        </div>
+    </nav>
+    <div class="dashboard-table">
+        <div class="table-container">
+            <table class="table-content" cellspacing="0">
+                <thead class="header">
+                    <tr>
+                        <th></th>
+                        <th>ID</th>
+                        <th>Title</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Email</th>
+                        <th>Number</th>
+                        <th>Department</th>
+                        <th>Role</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for employee in employees %}
+                    <tr>
+                        <td><img src="" alt=""></td>
+                        <td>{{employee.id}}</td>
+                        <td>{{employee.title}}</td>
+                        <td><a href="{% url 'employee' employee.id %}">{{employee.first_name}}</a></td>
+                        <td>{{employee.last_name}}</td>
+                        <td><a href="mailto:{{employee.email}}">{{employee.email}}</a></td>
+                        <td>{{employee.phoneNumber}}</td>
+                        <td>{{employee.department}}</td>
+                        <td>{{employee.job_role}}</td>
+                        <td><a href="{% url 'update-employee' employee.id %}">Update</a></td>
+                        <td><a href="{% url 'delete-employee' employee.id %}"><i class='bx bx-x'></a></td>
+                    </tr>
+                    <a href="{% url 'dashboard' %}?q={{employee.first_name}}"></a>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <footer>
+        <div>
+            <li>
+                <a href="{% url 'create-user' %}" id="btn"><i class='bx bxs-user-plus'></i></a>
+            </li>
+            <p>{{employee_count}} Employees</p>
+        </div>
+    </footer>
+</div>
+{% endblock %}

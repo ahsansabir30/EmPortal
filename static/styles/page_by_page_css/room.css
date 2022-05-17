@@ -1,0 +1,151 @@
+#mbtn{
+    position: relative; 
+    top: 1.5px;
+}
+
+.left-container{
+    width: 50%;
+    float: left;
+}
+
+.left-container nav a{
+    padding-left: 5px;
+}
+
+.right-container{
+    width: 50%;
+    float: right;
+    height: 720px;
+}
+
+.thread-container{
+    padding-top: 5px;
+}
+
+.rooms::-webkit-scrollbar {
+    width: 0px; 
+}
+
+.rooms {
+    padding-left: 20px;
+    padding-right: 5px;
+    height: 680px;
+    overflow-y: auto;
+}
+
+.rooms .roomlist{
+    display: block;
+    border-radius: 1rem;
+    padding: 1rem;
+}
+
+.rooms .roomlist:hover{
+    background-color: #F8F8FF;
+}
+
+.roomlist .roomlist-header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.roomlist a{
+    color: #2C3E50;
+    text-decoration: none;
+} 
+
+.roomlist .roomlist-bottom{
+    text-align: right;
+}
+
+
+.current-chat{ 
+    height: 715px;
+    padding: 1px;
+    padding-right: 10px;
+}
+
+.chat-list{
+    border-radius: 25px 0 0 25px;   
+    height: 690px;
+    padding: 10px;
+    overflow-y: auto;
+    background-color: #F8F8FF;
+}
+
+.message-title{
+    margin: 15px;
+    font-weight: bold;
+    font-size: 1.2em;
+    color: #2C3E50;
+}
+
+.chatroom{
+    height: 700px;
+    margin: 5px 10px 10px 15px;
+    padding: 10px;
+    padding-right: 10px;
+}
+
+.chat-list{
+    margin: 10px;
+}
+
+.current-thread{
+    margin: 10px;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.current-thread:hover{
+    background-color: white;
+    color: #2C3E50;
+}
+
+.current-header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.room-conversation{
+    border-radius: 25px 0 0 0px;   
+    height: 640px;
+    overflow-y: auto;
+    background-color: #F8F8FF;
+}
+
+.message{
+    padding: 15px;
+}
+
+.message-header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.message-text-u,
+.message-text-o{
+    padding-left: 5px;
+}
+
+.chatroom .message-user{
+    margin-left: auto;
+    color: 	#282828;
+    border-left: 2px solid #282828;
+}
+
+.comment-footer{
+    align-items: left;
+    padding: 1px;
+    padding-top: 10px;
+}
+
+.comment-footer form input{
+    padding: 10px;
+    width: 100%;
+    background-color: #F5F5F5;
+    border-radius: 0 0 0 25px;
+    border: 1px solid #000;
+}

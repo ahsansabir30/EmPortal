@@ -1,0 +1,56 @@
+{% extends 'main.html' %} 
+{% block content %}
+{% if page == "Edit Timesheet" %}
+<form method="POST" action="">
+    {% csrf_token %}
+    {{timesheet_form.as_p}}
+    <input type="submit" value="Submit"/> 
+    <a href="{% url 'manager-access-timesheet' %}">Back</a>
+</form>
+{% elif page == "AllTimeSheets" %}
+<a href="{% url 'employee-timesheet' request.user.id %}">Back</a>
+<div>
+    <form method="GET" action="{% url 'manager-access-timesheet' %}">
+        <input type="text" name="q" placeholder="Search Timesheet..." />
+    </form>
+
+    {% for time in employee_time %}
+    <p>{{time.username|capfirst}} -- {{time.recorded_by|capfirst}} -- {{time.clocked_in}} -- {{time.clocked_out}} -- {{time.hours_worked}}</p>
+    <a href="{% url 'edit-timesheet' time.id %}">Edit</a>
+    <a href="{% url 'delete-timesheet' time.id %}">Delete</a>
+    {% endfor %}
+</div>
+{% else %}
+<a href="{% url 'manager-access-timesheet' %}">Timesheet(Manager)</a>
+<a href="{% url 'annual-leave' request.user.id %}">Annual Leave</a>
+<a href="{% url 'manager-annual-leave' %}">Holiday Request</a>
+<a href="{% url 'sick-leave' %}">Sick Leave</a>
+<div>
+    <div>{{message}}</div>
+    <form action="" method="post">
+        {% csrf_token %}
+        <fieldset>
+            <legend>Clock In/Out</legend>
+            <div></div>
+            <table>
+                <tr>
+                    <td></td>
+                    <td><input type="submit" name="clock_action" value="ClockIn"><input type="submit" name="clock_action" value="ClockOut"></td>
+                </tr>
+            </table>
+        </fieldset>
+    </form>
+
+    <div>
+        <form method="GET" action="{% url 'employee-timesheet' request.user.id %}">
+            <input type="text" name="q" placeholder="Search Timesheet..." />
+        </form>
+    </div>
+    {% for time in employee_time %}
+        {% if request.user == time.username %}
+        <p>{{time.username|capfirst}} -- {{time.clocked_in}} -- {{time.clocked_out}} -- {{time.hours_worked}}</p>
+        {% endif %}
+    {% endfor %}
+</div>
+{% endif %}
+{% endblock %}
