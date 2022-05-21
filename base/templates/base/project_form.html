@@ -1,16 +1,18 @@
 {% extends 'main.html' %}
 
+{% load crispy_forms_tags %}
+
 {% block content %}
 {% if page == "form" %}
-<div>
+<div class="form_container">
     <form method="POST" action="">
         {% csrf_token %} 
-        {{form.as_p}}
+        {{form|crispy}}
         <input type="submit" value="Submit" /> 
     </form>
 </div>
 {% elif page == "update_project" %}
-<div>
+<div class="form_container">
     <form method="POST" action="">
         {% csrf_token %}
         <label for="{{ form.date_from.id_for_label }}" > Project Name:</label>
@@ -19,13 +21,15 @@
         {{form.date_from}}
         <label for="{{ form.date_from.id_for_label }}" > Date End:</label>
         {{form.due_date}}
+        <div class="form-part">
         <label for="{{ form.date_from.id_for_label }}" > Participant:</label>
         {{form.participants}}
+        </div>
         <input type="submit" value="Submit" /> 
     </form>
 </div>
 {% else %}
-<div>
+<div class="form_container">
     <form action="" method="post">
         {% csrf_token %}
         <div class="fieldWrapper">

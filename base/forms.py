@@ -1,11 +1,18 @@
-from distutils.command import clean
-from django.forms import ModelForm, TextInput
+from django.forms import ModelForm
+from django.contrib.auth.models import Group
 from .models import Employee, EmployeeAltContact, Department, User, JobRole, SickLeave, Timesheet, Room, Messages, Project, ProjectStage
 from django import forms
+from emportal import settings
+
+DISPLAY_CHOICES = (
+    ("admin", "Admin"),
+    ("employee", "Employee")
+)
 
 class UserForm(ModelForm):
     password1 = forms.CharField(label='Password', widget=forms.PasswordInput)
     password2 = forms.CharField( label='Password confirmation', widget=forms.PasswordInput)
+    display_type = forms.ChoiceField(widget=forms.RadioSelect, choices=DISPLAY_CHOICES)
 
     class Meta:
         model = User
@@ -30,6 +37,9 @@ class EmployeeForm(ModelForm):
         model= Employee
         fields = '__all__'
         exclude  = ['username']
+    
+    dateofbirth = forms.DateField(widget=forms.DateInput(format ='%d/%m/%Y'), input_formats=settings.DATE_INPUT_FORMATS)
+    join_date = forms.DateField(widget=forms.DateInput(format ='%d/%m/%Y'), input_formats=settings.DATE_INPUT_FORMATS)
 
 class EmployeeAltContactForm(ModelForm):
     class Meta:
@@ -86,8 +96,8 @@ class ProjectForm(forms.ModelForm):
         exclude  = ['host']
 
     project = forms.CharField()
-    date_from = forms.DateField()
-    due_date = forms.DateField()
+    date_from = forms.DateField(widget=forms.DateInput(format ='%d/%m/%Y'), input_formats=settings.DATE_INPUT_FORMATS)
+    due_date = forms.DateField(widget=forms.DateInput(format ='%d/%m/%Y'), input_formats=settings.DATE_INPUT_FORMATS)
     participants = forms.ModelMultipleChoiceField(
         queryset=User.objects.all(),
         widget=forms.CheckboxSelectMultiple
@@ -98,4 +108,5 @@ class ProjectStageForm(ModelForm):
         model= ProjectStage
         exclude  = ['project']
 
-
+    date_from = forms.DateField(widget=forms.DateInput(format ='%d/%m/%Y'), input_formats=settings.DATE_INPUT_FORMATS)
+    date_to = forms.DateField(widget=forms.DateInput(format ='%d/%m/%Y'), input_formats=settings.DATE_INPUT_FORMATS)

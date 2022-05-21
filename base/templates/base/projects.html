@@ -5,7 +5,9 @@
     <div class="p-left-content">
         <div class="top-container">
             <div class="nav-container">
-                <span><a href="{% url 'create-project' %}"><i class='bx bx-plus' id="mbtn"></i>Create Project</a></span>
+                <div class="header-links">
+                    <a href="{% url 'create-project' %}"><i class='bx bx-plus' id="mbtn"></i>Create Project</a>
+                </div>
             </div>
         </div>
         <div class="project-list">
@@ -27,7 +29,7 @@
                                 <span id="intime">{{project.date_from| date:"d M"}}</span> - <span id="intime">{{project.due_date| date:"d M"}}</span>
                                 {% endif %}
                             </div>
-                            <a href="{% url 'update-project' project.id %}">Update</a>
+                            <a href="{% url 'update-project' project.id %}"><i class='bx bx-edit'></i></a>
                         </div>
                     </div>
                 </div>
@@ -49,7 +51,7 @@
                                 <span id="intime">{{project.date_from| date:"d M"}}</span> - <span id="intime">{{project.due_date| date:"d M"}}</span>
                                 {% endif %}
                             </div>
-                            <a href="{% url 'update-project' project.id %}">Update</a>
+                            <a href="{% url 'update-project' project.id %}"><i class='bx bx-edit'></i></a>
                         </div>
                     </div>
                 </div>

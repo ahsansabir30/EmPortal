@@ -1,10 +1,12 @@
 {% extends 'main.html' %} 
 
+{% load crispy_forms_tags %}
+
 {% block content %}
-<div>
+<div class="form_container">
     <form method="POST" action="">
         {% csrf_token %} 
-        {{form.as_p}}
+        {{form|crispy}}
         <input type="submit" value="Submit" /> 
         <a href="{% url 'rooms' %}">Back</a>
     </form>

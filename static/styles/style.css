@@ -261,9 +261,10 @@ footer div form{
 }
 
 .left-content{
-    height: 650px;
-    width: 50%;
+    height: 680px;
+    width: 60%;
     float: left;
+    overflow-y: auto;
 }
 
 .right-content{
@@ -311,23 +312,6 @@ footer div form{
 .secondary-links #jbtn{
     position: relative;     
     top: 2px;
-}
-
-.nav-container{
-    padding-left: 5px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.nav-container a{
-    text-decoration: none;
-    color: #2C3E50;
-} 
-
-.nav-container span{
-    color: #2980B9;
-    font-size: 0.9em;
 }
 
 .search-container{
@@ -593,7 +577,14 @@ footer div p{
 #mbtn{
     position: relative; 
     top: 1.5px;
+    color: #2C3E50;
 }
+
+
+.nav-container span a{
+    color: #2C3E50;
+    font-size: 0.9em;
+} 
 
 .left-container{
     width: 50%;
@@ -647,6 +638,7 @@ footer div p{
 } 
 
 .roomlist .roomlist-bottom{
+    padding-top: 5px;
     text-align: right;
 }
 
@@ -789,16 +781,6 @@ footer div p{
     height: 100%;
 }
 
-.top-container a{
-    text-decoration: none;
-    padding: 5px;
-    color: #848482;
-}
-
-.top-container a:hover{
-    color: #7B68EE;
-}
-
 #tbtn{
     position: fixed;
     right: 2px;
@@ -923,24 +905,6 @@ footer div #t-mess{
     color: red;
 }
 
-.form_container{
-    text-align: center;
-    padding-top: 5%;
-}
-
-.form_container .form{
-    margin: auto;
-    width: 500px;
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-    padding: 20px;
-    display: inline-block;
-    text-align: right;
-}
-
-.form_container h4{
-    text-align: left;
-}
-
 .a-container{
     height: 100%;
     width: 100%;
@@ -1052,4 +1016,53 @@ footer div #t-mess{
     margin: 20px;
     width: 600px;
     height: 250px;
+}
+
+.form_container{
+    text-align: center;
+    padding-top: 2%;
+    font-size: 0.9em;
+}
+
+.form_container{
+    margin: 10px;
+}
+
+.form_container .fieldWrapper{
+    margin: 10px;
+}
+
+.top-container a{
+    text-decoration: none;
+    padding: 5px;
+    color: #2C3E50;
+    font-size: 0.95em;
+}
+
+.top-container a:hover{
+    color: #7B68EE;
+}
+
+.nav-container{
+    padding-left: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#dhead{
+    padding: 5px;
+    color: #2C3E50;
+    font-size: 0.95em;
+}
+
+.roomlist-bottom p{
+    padding-top: 5px;
+    float: left;
+    font-size: 0.8em;
+    color: #A9CCE3;
+}
+
+footer .message-error{
+    background-color: red;
 }

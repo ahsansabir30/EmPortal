@@ -1,4 +1,7 @@
 {% extends 'main.html' %} 
+
+{% load crispy_forms_tags %}
+
 {% block content %}
 {% if page == 'create user' %}
 <div>
@@ -12,15 +15,14 @@
     <br>
     <a href="{% url 'create-employee' %}">Finish Profile</a>
     <a href="{% url 'delete-user' user.id %}">Delete User</a>
-</div>
+</div>  
 {% else %}
 <div class="form_container" >
     <div class="form">
-        <h4>Registration Form</h4>
-        <form method="POST" action="">
-            {% csrf_token %}
-            {{form.as_p}}
-            <input type="submit" value="Submit"/>
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %} 
+            {{form|crispy}}
+            <input type="submit" value="Submit" /> 
         </form>
         <h5>{{message}}</h5>
     </div> 

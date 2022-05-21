@@ -1,14 +1,13 @@
+from distutils.command.upload import upload
 from django.db import models
-from django.contrib.auth.models import AbstractUser, BaseUserManager
+from django.contrib.auth.models import AbstractUser
 from datetime import datetime, timezone
-
 
 class User(AbstractUser):
     username = models.CharField(max_length = 100, unique=True, null=False)
 
     def __str__(self):
         return self.username
-
 
 class Department(models.Model):
     department = models.CharField(max_length=100, null=True, unique=True)   
@@ -26,7 +25,7 @@ class JobRole(models.Model):
         return self.job_role
 
 class Employee(models.Model):
-    avatar = models.ImageField(null=True, default="user-clear.png")
+    image = models.ImageField(null=True, default="user-clear.png")
     username = models.OneToOneField(User, on_delete= models.CASCADE)
     TITLE_CHOICE = (('Mr', 'Mr'), ('Ms', 'Ms'), ('Mrs', 'Mrs'), ('Miss', 'Miss'), ('Dr', 'Dr'), ('Sir','Sir'), ('Other', 'Other'))
     title = models.CharField(max_length=5, choices=TITLE_CHOICE)
@@ -87,9 +86,8 @@ class Timesheet(models.Model):
             return self.clocked_out - self.clocked_in
 
     def __str__(self):
-        return "%s -- %s -- %s" % (self.username, self.clocked_in, self.clocked_out)
+        return "%s time between %s to %s" % (self.username, self.clocked_in, self.clocked_out)
 
-    
     class Meta:
         ordering = ['-recorded_by']
 
@@ -132,7 +130,6 @@ class Room(models.Model):
 
     def __str__(self):
         return str(self.room)     
-
 
     def __unicode__(self):
         return self.participants 

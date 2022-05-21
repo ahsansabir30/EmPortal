@@ -1,28 +1,32 @@
 {% extends 'main.html' %} 
+
+{% load crispy_forms_tags %}
+
 {% block content %}
 
 {% if page == "role_form" %}
-<div class="form">
+<div class="form_container">
     <form method="POST" action="">
         {% csrf_token %} 
-        {{job_form.as_p}}
+        {{job_form|crispy}}
         <input type="submit" value="Submit" /> 
         <a href="{% url 'job-roles' %}">Back</a>
     </form>
 </div>
 {% else %}
 <div class="dashboard-container">
-    <nav>
+    <div class="top-container">
         <div class="nav-container">
-            <span><a href="{% url 'create-role' %}"><i class='bx bx-plus' id="mbtn"></i>Create Role</a></span>
+            <div class="header-links">
+                <a href="{% url 'create-role' %}"><i class='bx bx-plus' id="mbtn"></i>Create Roles</a>
+            </div>
             <div class="search-container">
                 <form method="GET" action="{% url 'job-roles' %}">
                     <input type="text" name="q" placeholder="Search..." />
-                    <a href="{% url 'job-roles' %}" id="btn"><i class='bx bx-x'></i></a>
                 </form>
             </div>
         </div>
-    </nav>
+    </div>
     <div class="content">
         <div class="left-content">
             {% regroup job_role by department as departments %}
