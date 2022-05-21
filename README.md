@@ -28,7 +28,7 @@ Timesheet/ Leave Page
 ![image](https://user-images.githubusercontent.com/92265482/169661905-f90abba1-6a94-47ba-988b-9333b9250c4e.png)
 
 Room Page (Chat-like App)
-![image](https://user-images.githubusercontent.com/92265482/169661937-1b74efc5-a039-44ad-b0cc-d863bc5983b5.png)
+![image](https://user-images.githubusercontent.com/92265482/169662655-25f7d7c7-ac76-4979-9eb0-0a3a0ae2f407.png)
 ![image](https://user-images.githubusercontent.com/92265482/169662193-7d7998b6-4e67-4fea-9309-c08078445214.png)
 
 Project Page
