@@ -2,6 +2,10 @@ Employee Management System
 
 Built using Django, HTML, CSS, Javascript, PostgreSQL
 
+Sign-in
+![image](https://user-images.githubusercontent.com/92265482/169662557-b94d0a24-be26-458c-861c-b299a4013c10.png)
+
+
 Dashboard
 ![image](https://user-images.githubusercontent.com/92265482/169662303-3cff72b7-7cb0-41ff-a8e6-c6c2b49939cb.png)
 ![image](https://user-images.githubusercontent.com/92265482/169661753-2ef55ca9-8968-424e-b9d3-648c8bc4f35b.png)
