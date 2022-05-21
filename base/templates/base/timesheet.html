@@ -1,13 +1,17 @@
 {% extends 'main.html' %}
 
+{% load crispy_forms_tags %}
+
 {% block content %}
 {% if page == "Edit Timesheet" %}
-<form method="POST" action="">
-    {% csrf_token %}
-    {{timesheet_form.as_p}}
-    <input type="submit" value="Submit"/> 
-    <a href="{% url 'manager-access-timesheet' %}">Back</a>
-</form>
+<div class="form_container">
+    <form method="POST" action="">
+        {% csrf_token %}
+        {{timesheet_form|crispy}}
+        <input type="submit" value="Submit"/> 
+        <a href="{% url 'manager-access-timesheet' %}">Back</a>
+    </form>
+</div>
 {% else %}
 <div class="dashboard-container">
     <div class="popup-t" id="popup-t">
@@ -22,19 +26,21 @@
             </form>
         </div>
     </div>
- 
     <div class="top-container">
         <div class="nav-container">
             <div class="header-links">
                 <a href="{% url 'annual-leave' request.user.id %}"><i class='bx bx-sun'></i>Annual Leave</a>
+                {% for group in request.user.groups.all %}
+                {% if group.name == 'admin' %}
                 <a href="{% url 'manager-access-timesheet' %}"><i class='bx bx-table'></i>Timesheet</a>
                 <a href="{% url 'manager-annual-leave' %}"><i class='bx bx-task'></i>Holiday Request</a>
                 <a href="{% url 'sick-leave' %}"><i class='bx bxs-thermometer'></i>Sick Leave</a>
+                {% endif %}
+                {% endfor %}  
             </div>
             <div class="search-container">
                 <form method="GET" action="{% url 'employee-timesheet' request.user.id %}">
                     <input type="text" name="q" placeholder="Search..." />
-                    <a href="{% url 'employee-timesheet' request.user.id %}" id="tbtn"><i class='bx bx-x'></i></a>
                 </form>
             </div>
         </div>

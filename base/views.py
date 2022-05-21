@@ -1,4 +1,3 @@
-from asyncio.windows_events import NULL
 from email import message
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
@@ -6,13 +5,14 @@ from django.db.models import Q
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 from .models import Department, Employee, JobRole, User, Timesheet, AnnualLeave, SickLeave, Room, Messages, Project, ProjectStage, EmployeeAltContact
 from .forms import DepartmentForm, EmployeeForm, JobRoleForm, UserForm, SickLeaveForm, TimeSheetForm, RoomForm, ProjectForm, ProjectStageForm, EmployeeAltContactForm
 from datetime import date, datetime, timezone, timedelta
+from .decorators import admin_only
+from django.contrib.auth.decorators import user_passes_test
 
 def Access(request):
-    context={}
     return render(request, 'base/access.html')
 
 def LoginUser(request):
@@ -47,12 +47,13 @@ def LogoutUser(request):
     return redirect('login')
 
 @login_required(login_url='login')
+@admin_only
 def CreateUser(request):
-    page = ""
-    message = ""
+    page = " "
+    message = " "
     form = UserForm()
     # checking for user where employee profile was incomplete (if not should ask user to delete the given user or to complete given user profile) 
-    user = User.objects.filter().latest('date_joined')
+    user = User.objects.filter().latest('id')
     try:
         # user and employee profile exist - so allow new-user creation
         name = Employee.objects.get(username=user)
@@ -65,25 +66,34 @@ def CreateUser(request):
         message = f"Complete user profile: {user}, before you creating a new user"
         page = 'finish profile'  
 
-    elif name == True:
+    if name == True:
         if request.method == 'POST':
             form = UserForm(request.POST)
             if form.is_valid():
+                # checking if the user is gonna be an admin or an employee
+                display_type = request.POST["display_type"]
                 user = form.save(commit=False)
                 user.username = user.username.lower()
+                user.save()
+                # onece the user has been saved, we can allocate user a group (so between an employee or an admin) 
+                group = Group.objects.get(name=str(display_type))
+                user.groups.add(group)
                 user.save()
                 return redirect ('create-employee')
             else:
                 messages.error(request, 'An error occured during registration')
 
-    context = {'page': page, 'form': form, 'message': message, 'user': user}
+
+    context = {'form': form, 'message': message, 'user': user, 'page':page}
     return render(request, 'base/userprofile_form.html', context)
 
 @login_required(login_url='login')
-def CreateEmployeeProfile(request):
-    page = ''
+@admin_only
+def CreateEmployeeProfile(request): 
+    page = 'create_employee'
     form = EmployeeForm()
-    user = User.objects.filter().latest('date_joined')
+    user = User.objects.filter().latest('id')
+    print(user)
     try:
         name = Employee.objects.get(username=user)
         name = True
@@ -99,7 +109,7 @@ def CreateEmployeeProfile(request):
             form = EmployeeForm(request.POST)
             if form.is_valid():
                 employee = form.save(commit=False)
-                employee.username = User.objects.filter().latest('date_joined')
+                employee.username = user
                 employee.save()
                 form.save()
                 return redirect('dashboard') 
@@ -108,6 +118,7 @@ def CreateEmployeeProfile(request):
     return render(request, 'base/userprofile_form.html', context)
 
 @login_required(login_url='login')
+@admin_only
 def DeleteUser(request, pk):
     user = User.objects.get(id=pk)
 
@@ -136,6 +147,7 @@ def Dashboard(request):
 
 # currently only an employee can edit his/her details - need to make it so only a super user can edit an employee profile
 @login_required(login_url='login')
+@admin_only
 def UpdateEmployee(request, pk):
     employee = Employee.objects.get(id=pk)
     form = EmployeeForm(instance=employee)
@@ -153,11 +165,9 @@ def UpdateEmployee(request, pk):
     return render(request, 'base/userprofile_form.html', context)
 
 @login_required(login_url='login')
+@admin_only
 def DeleteEmployee(request, pk):
     employee = Employee.objects.get(id=pk)
-
-    #if request.user != employee.username:
-        #return redirect ('access')
 
     if request.method == 'POST':
         employee.delete()
@@ -178,6 +188,7 @@ def EmployeeProfile(request, pk):
     return render(request, 'base/employee.html', context)
 
 @login_required(login_url='login')
+@admin_only
 def CreateEmployeeAlt(request, pk):
     form = EmployeeAltContactForm()
     
@@ -202,6 +213,7 @@ def CreateEmployeeAlt(request, pk):
     return render(request, 'base/employeeplus.html', context)
 
 @login_required(login_url='login')
+@admin_only
 def UpdateEmployeeAlt(request, pk):
     employee = Employee.objects.get(id=pk)
     section = " "
@@ -255,6 +267,7 @@ def Departments(request):
     return render(request, 'base/department.html', context)
 
 @login_required(login_url='login')
+@admin_only
 def UpdateDepartment(request, department):
     department = Department.objects.get(department=department)
     department_form = DepartmentForm(instance=department)
@@ -275,15 +288,15 @@ def UpdateDepartment(request, department):
     return render(request, 'base/department.html', context)
 
 @login_required(login_url='login')
+@admin_only
 def DeleteDepartment(request, department):
-    page = 'deletedep'
     department = Department.objects.get(department=department)
 
     if request.method == 'POST':
         department.delete()
         return redirect('departments')
 
-    context = {'obj': department, 'page': page}
+    context = {'obj': department}
     return render(request, 'base/delete.html', context)
 
 ########## JOB ROLE ##############
@@ -300,6 +313,7 @@ def JobRoles(request):
     return render(request, 'base/job_roles.html', context)
 
 @login_required(login_url='login')
+@admin_only
 def CreateJobRole(request):
     page = 'role_form'
     job_form = JobRoleForm
@@ -316,6 +330,7 @@ def CreateJobRole(request):
     return render(request, 'base/job_roles.html', context)
 
 @login_required(login_url='login')
+@admin_only
 def UpdateJobRole(request, pk):
     page = 'role_form'
     job_role = JobRole.objects.get(id=pk)
@@ -331,15 +346,15 @@ def UpdateJobRole(request, pk):
     return render(request, 'base/job_roles.html', context)
 
 @login_required(login_url='login')
+@admin_only
 def DeleteJobRole(request, pk):
-    page = 'deletejobrole'
     role = JobRole.objects.get(id=pk)
 
     if request.method == 'POST':
         role.delete()
         return redirect('job-roles')
 
-    context = {'obj': role, 'page': page}
+    context = {'obj': role,}
     return render(request, 'base/delete.html', context)
 ########## TIME ##############
 @login_required(login_url='login')
@@ -385,6 +400,7 @@ def TimeSheet(request, pk):
     return render(request, 'base/timesheet.html', context) 
 
 @login_required(login_url='login')
+@admin_only
 def AllTimeSheet(request):
     q = request.GET.get('q') if request.GET.get('q') != None else ''
 
@@ -398,6 +414,8 @@ def AllTimeSheet(request):
     context = {'employee_time': employee_time}
     return render(request, 'base/timesheet_manager.html', context)
 
+@login_required(login_url='login')
+@admin_only
 def EditTimeSheet(request, pk):
     page = 'Edit Timesheet'
     time = Timesheet.objects.get(id=pk)
@@ -414,6 +432,7 @@ def EditTimeSheet(request, pk):
     return render(request, 'base/timesheet.html', context)
 
 @login_required(login_url='login')
+@admin_only
 def DeleteTimeSheet(request, pk):
     time = Timesheet.objects.get(id=pk)
    
@@ -470,6 +489,7 @@ def CancelAnnualLeave(request, pk):
     return render(request, 'base/delete.html', context)
 
 @login_required(login_url='login')
+@admin_only
 def ManagerAnnualLeave(request):
     q = request.GET.get('q') if request.GET.get('q') != None else ''
 
@@ -486,6 +506,7 @@ def ManagerAnnualLeave(request):
     return render(request, 'base/timesheet_mleave.html', context)
 
 @login_required(login_url='login')
+@admin_only
 def ManagerAnnualLeaveAction(request, action, holiday_request_id):
     page = 'ManagerAnnualLeave'
 
@@ -515,6 +536,7 @@ def date_range_list(start_date, end_date):
     return date_list
 
 @login_required(login_url='login')
+@admin_only
 def SickLeaveView(request):
     page = 'Sick Leave'
 
@@ -758,7 +780,7 @@ def ViewProjectStages(request, pk):
             instance.project = project_name
             # check if the data_to is greater than date_from
             if instance.date_to < instance.date_from:
-                message = f"Failed to add project stage {instance.stage_name}, the due date has to be greater than date from"
+                message = f"Failed to add stage {instance.stage_name}, due date has to be greater than date from"
             else:
                 # checking if the dates for the new project stage are in between dates under the project  
                 if date_from <= instance.date_from <= instance.date_to <= date_to:

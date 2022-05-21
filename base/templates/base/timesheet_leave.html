@@ -31,14 +31,17 @@
         <div class="nav-container"> 
             <div class="header-links">
                 <a href="{% url 'annual-leave' request.user.id %}"><i class='bx bx-sun'></i>Annual Leave</a>
+                {% for group in request.user.groups.all %}
+                {% if group.name == 'admin' %}
                 <a href="{% url 'manager-access-timesheet' %}"><i class='bx bx-table'></i>Timesheet</a>
                 <a href="{% url 'manager-annual-leave' %}"><i class='bx bx-task'></i>Holiday Request</a>
                 <a href="{% url 'sick-leave' %}"><i class='bx bxs-thermometer'></i>Sick Leave</a>
+                {% endif %}
+                {% endfor %}  
             </div>
             <div class="search-container">
                 <form method="GET" action="{% url 'annual-leave' request.user.id %}">
                     <input type="text" name="q" placeholder="Search..." />
-                    <a href="{% url 'annual-leave' request.user.id  %}" id="btn"><i class='bx bx-x'></i></a>
                 </form>
             </div>
         </div>

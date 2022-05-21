@@ -18,7 +18,7 @@
                 <ul>
                     {{message}}
                     <li><a href="{% url 'employee-alt' employee.id %}" ><i class='bx bx-plus'></i></a></li>
-                    <li><a href="mailto:{{employee_alt.email}}" ><i class='bx bx-envelope'></i></a></li>
+                    <li><a href="mailto:{{employee_alt.email}}"><i class='bx bx-envelope'></i></a></li>
                     <li><a href="{{employee_alt.other_phone}}" ><i class='bx bxs-phone' ></i></a></li>
                     <li><a href="https://www.github.com/{{employee_alt.github}}"><i class='bx bxl-github' ></i></i></a></li>
                     <li><a href="https://{{employee_alt.website}}" ><i class='bx bx-world' ></i></a></li>
@@ -79,7 +79,7 @@
     <div class="employee-float">
         <div class="employee-image">
             {% load static %}
-            <img src="{{employee.avatar.url}}" alt="blank user" class="">
+            <img src="{{employee.image.url}}" alt="blank user" class="">
         </div>  
         <div class="employee-desc">
             <span>{{employee_alt.profile|truncatewords:"80"}}</span>

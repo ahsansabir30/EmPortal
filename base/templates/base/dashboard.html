@@ -3,17 +3,18 @@
 {% block content %}
 
 <div class="dashboard-container">
-    <nav>
+    <div class="top-container">
         <div class="nav-container">
-            <span>User: {{request.user|capfirst}}</span>
+            <div class="header-links">
+                <span id="dhead">User: {{request.user|capfirst}}</span>
+            </div>
             <div class="search-container">
                 <form method="GET" action="{% url 'dashboard' %}">
                     <input type="text" name="q" placeholder="Search..." />
-                    <a href="{% url 'dashboard' %}" id="btn"><i class='bx bx-x'></i></a>
                 </form>
             </div>
         </div>
-    </nav>
+    </div>
     <div class="dashboard-container">
         <div class="dash-con">
             {% for employee in employees %}

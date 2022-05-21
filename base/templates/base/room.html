@@ -3,9 +3,13 @@
 {% block content %}
 <div class="dashboard-container">
     <div class="left-container">
-        <nav>
-            <a href="{% url 'create-room' %}"><i class='bx bx-plus' id="mbtn"></i>Create</a>    
-        </nav>
+        <div class="top-container">
+            <div class="nav-container">
+                <div class="header-links">
+                    <a href="{% url 'create-room' %}"><i class='bx bx-plus' id="mbtn"></i>Create Room</a>  
+                </div>
+            </div>
+        </div>
         <div class="thread-container">
             <div class="rooms">
                 {% for room in rooms %}
@@ -18,7 +22,8 @@
                         {% for user in room.participants.all %}{{user.username|capfirst}} {% endfor %}  
                     </div>
                     <div class="roomlist-bottom">
-                        <a href="{% url 'update-room' room.id %}">Update</a>
+                        <p>{{room.description|truncatewords:"40"}}</p>
+                        <a href="{% url 'update-room' room.id %}"><i class='bx bx-edit'></i></a>
                     </div>
                 </div>
                 {% endfor %}
@@ -28,7 +33,7 @@
     <div class="right-container">
         <div class="current-chat">
             <div class="chat-list">
-                <h3>Current Activity</h3>
+                <h3>Recent Activity</h3>
                 {% for message in recent_activity %}
                 <a class="noHover" href="{% url 'view-room' message.room.id %}">
                 <div class="current-thread">
