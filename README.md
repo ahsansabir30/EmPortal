@@ -8,6 +8,7 @@ Sign-in
 
 Dashboard
 ![image](https://user-images.githubusercontent.com/92265482/169662303-3cff72b7-7cb0-41ff-a8e6-c6c2b49939cb.png)
+![image](https://user-images.githubusercontent.com/92265482/169662594-d848ebfa-6a75-48a7-8b12-ffed86e3fb30.png)
 ![image](https://user-images.githubusercontent.com/92265482/169661753-2ef55ca9-8968-424e-b9d3-648c8bc4f35b.png)
 
 Employee Profile Page
