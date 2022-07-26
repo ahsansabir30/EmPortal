@@ -1,4 +1,4 @@
-Employee Management System built in Django
+Employee Management System 
 
 Built using Django, HTML, CSS, Javascript, PostgreSQL
 
